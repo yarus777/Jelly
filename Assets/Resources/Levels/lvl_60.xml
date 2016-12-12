@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Levels>
+  <Level>
+    <TaskLevel type="3" goal="4" />
+    <DiamondSettings min="0" max="0" chance="0" />
+    <LimitLevel type="3" count="35" />
+    <Stars first="35000" second="45000" third="51000" />
+    <PowerUps bombs="1" arrows="1" gifts="0" prisms="1" />
+    <BonusTime bonusTime="1" />
+  </Level>
+  <ChasesColors>
+    <ChanceColor color="0" chance="0" />
+    <ChanceColor color="1" chance="20" />
+    <ChanceColor color="2" chance="20" />
+    <ChanceColor color="3" chance="20" />
+    <ChanceColor color="4" chance="20" />
+  </ChasesColors>
+  <Field colls="6" rows="8" vRows="8">
+    <Cell bg="jam" type="puddle" color="2" hp="9" />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell type="empty" />
+    <Cell bg="jam" type="puddle" color="1" hp="9" />
+    <Cell type="empty" />
+    <Cell type="brick" />
+    <Cell />
+    <Cell />
+    <Cell type="brick" />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell type="dig" hp="4" />
+    <Cell />
+    <Cell type="slime" />
+    <Cell type="slime" />
+    <Cell />
+    <Cell type="dig" hp="4" />
+    <Cell type="dig" hp="4" />
+    <Cell />
+    <Cell type="slime" />
+    <Cell type="slime" />
+    <Cell />
+    <Cell type="dig" hp="4" />
+    <Cell type="brick" />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell type="brick" />
+    <Cell type="empty" />
+    <Cell type="brick" />
+    <Cell />
+    <Cell />
+    <Cell type="brick" />
+    <Cell type="empty" />
+    <Cell bg="jam" type="puddle" color="4" hp="9" />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell type="empty" />
+    <Cell bg="jam" type="puddle" color="3" hp="9" />
+  </Field>
+</Levels>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Levels>
+  <Level>
+    <TaskLevel type="5" goal="3" />
+    <DiamondSettings min="0" max="0" chance="0" />
+    <LimitLevel type="3" count="12" />
+    <Stars first="7000" second="22000" third="25000" />
+    <PowerUps bombs="1" arrows="1" gifts="0" prisms="1" />
+    <BonusTime bonusTime="1" />
+  </Level>
+  <ChasesColors>
+    <ChanceColor color="0" chance="20" />
+    <ChanceColor color="1" chance="20" />
+    <ChanceColor color="2" chance="20" />
+    <ChanceColor color="3" chance="20" />
+    <ChanceColor color="4" chance="20" />
+  </ChasesColors>
+  <Field colls="6" rows="8" vRows="8">
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+    <Cell type="puddle" color="3" hp="10" />
+    <Cell />
+    <Cell />
+    <Cell type="puddle" color="4" hp="5" />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell type="jelly" color="0" />
+    <Cell type="jelly" color="3" />
+    <Cell type="jelly" color="2" />
+    <Cell type="jelly" color="4" />
+    <Cell type="jelly" color="4" />
+    <Cell type="jelly" color="0" />
+    <Cell type="jelly" color="3" />
+    <Cell type="jelly" color="1" />
+    <Cell type="jelly" color="1" />
+    <Cell type="jelly" color="1" />
+    <Cell type="puddle" color="1" hp="3" />
+    <Cell type="jelly" color="2" />
+    <Cell type="empty" />
+    <Cell type="jelly" color="3" />
+    <Cell type="jelly" color="2" />
+    <Cell type="jelly" color="4" />
+    <Cell type="jelly" color="3" />
+    <Cell type="empty" />
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+    <Cell />
+    <Cell type="empty" />
+    <Cell />
+  </Field>
+</Levels>

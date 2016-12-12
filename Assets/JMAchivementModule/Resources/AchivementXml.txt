@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<achivementPacks>
+ <achivementPack id="Explorer">
+    <names en = "Explorer" ru = "Исследователь"></names>
+	<achivements>
+		<achivement>
+			<description en = "Complete 5 levels" ru = "Пройти 5 уровней"></description>
+			<maxProgress>5</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "1"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Complete 35 levels" ru = "Пройти 35 уровней"></description>
+			<maxProgress>35</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Complete 100 levels" ru = "Пройти 100 уровней"></description>
+			<maxProgress>100</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "10"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+
+
+  <achivementPack id="Conqueror">
+    <names en = "Conqueror" ru = "Завоеватель"></names>
+	<achivements>
+		<achivement>
+			<description en = "Complete 5 levels with 3 stars" ru = "Пройти 5 уровней на 3 звезды"></description>
+			<maxProgress>5</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Complete 35 levels with 3 stars" ru = "Пройти 35 уровней на 3 звезды"></description>
+			<maxProgress>35</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "5"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Complete 100 levels with 3 stars" ru = "Пройти 100 уровней на 3 звезды"></description>
+			<maxProgress>100</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "25"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+
+   <achivementPack id="Discoverer">
+    <names en = "Discoverer" ru = "Первооткрыватель"></names>
+	<achivements>
+		<achivement>
+			<description en = "Open 1 gate" ru = "Открыть 1 ворота"></description>
+			<maxProgress>1</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Open 2 gates" ru = "Открыть 2 ворот"></description>
+			<maxProgress>2</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "5"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Open 4 gates" ru = "Открыть 4 ворот"></description>
+			<maxProgress>4</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "15"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+
+  <achivementPack id="Jelly keeper">
+    <names en = "Jelly keeper" ru = "Хранитель желе"></names>
+	<achivements>
+		<achivement>
+			<description en = "Collect 10 green jellies" ru = "Собрать 10 зеленых желе"></description>
+			<maxProgress>10</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Collect 100 green jellies" ru = "Собрать 100 зеленых желе"></description>
+			<maxProgress>100</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "5"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Collect 300 green jellies" ru = "Собрать 300 зеленых желе"></description>
+			<maxProgress>300</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "15"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+
+    <achivementPack id="Exploder">
+    <names en = "Exploder" ru = "Взрыватель"></names>
+	<achivements>
+		<achivement>
+			<description en = "Explode 10 bombs" ru = "Взорвать 10 бомб"></description>
+			<maxProgress>10</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Explode 100 bombs" ru = "Взорвать 100 бомб"></description>
+			<maxProgress>100</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "5"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Explode 300 bombs" ru = "Взорвать 300 бомб"></description>
+			<maxProgress>300</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "15"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+
+    <achivementPack id="Sweet Tooth">
+    <names en = "Sweet Tooth" ru = "Сладкоежка"></names>
+	<achivements>
+		<achivement>
+			<description en = "Explode 10 color candies" ru = "Взорвать 10 цветных конфет"></description>
+			<maxProgress>10</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "3"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Explode 100 color candies" ru = "Взорвать 100 цветных конфет"></description>
+			<maxProgress>100</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "5"></honor>
+			</honors>
+		</achivement>
+		
+		<achivement>
+			<description en = "Explode 300 color candies" ru = "Взорвать 300 цветных конфет"></description>
+			<maxProgress>300</maxProgress>
+			<honors>
+				<honor id = "Energy" isBool = "false" count = "15"></honor>
+			</honors>
+		</achivement>
+		
+	</achivements>
+  </achivementPack>
+ 
+</achivementPacks>

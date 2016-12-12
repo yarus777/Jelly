@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Levels>
+  <Level>
+    <TaskLevel type="4" goal="2" />
+    <DiamondSettings min="0" max="0" chance="0" />
+    <LimitLevel type="3" count="7" />
+    <Stars first="5000" second="10000" third="13000" />
+    <PowerUps bombs="1" arrows="1" gifts="1" prisms="1" />
+    <BonusTime bonusTime="1" />
+  </Level>
+  <ChasesColors>
+    <ChanceColor color="0" chance="0" />
+    <ChanceColor color="1" chance="25" />
+    <ChanceColor color="2" chance="25" />
+    <ChanceColor color="3" chance="25" />
+    <ChanceColor color="4" chance="25" />
+  </ChasesColors>
+  <Field colls="6" rows="6" vRows="6">
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell />
+    <Cell type="diamond" />
+    <Cell />
+    <Cell />
+    <Cell type="diamond" />
+    <Cell />
+  </Field>
+</Levels>

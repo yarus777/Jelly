@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Levels>
+  <Level>
+    <TaskLevel type="2" goal="18" />
+    <DiamondSettings min="0" max="0" chance="0" />
+    <LimitLevel type="3" count="14" />
+    <Stars first="5000" second="10000" third="15000" />
+    <PowerUps bombs="1" arrows="1" gifts="1" prisms="1" />
+    <BonusTime bonusTime="1" />
+  </Level>
+  <ChasesColors>
+    <ChanceColor color="0" chance="20" />
+    <ChanceColor color="1" chance="20" />
+    <ChanceColor color="2" chance="20" />
+    <ChanceColor color="3" chance="20" />
+    <ChanceColor color="4" chance="20" />
+  </ChasesColors>
+  <Field colls="6" rows="6" vRows="6">
+    <Cell />
+    <Cell type="ice" color="3" />
+    <Cell />
+    <Cell type="ice" color="2" />
+    <Cell />
+    <Cell type="ice" color="4" />
+    <Cell type="ice" color="1" />
+    <Cell />
+    <Cell type="ice" color="4" />
+    <Cell />
+    <Cell type="ice" color="1" />
+    <Cell />
+    <Cell />
+    <Cell type="ice" color="2" />
+    <Cell />
+    <Cell type="ice" color="3" />
+    <Cell />
+    <Cell type="ice" color="2" />
+    <Cell type="ice" color="0" />
+    <Cell />
+    <Cell type="ice" color="0" />
+    <Cell />
+    <Cell type="ice" color="4" />
+    <Cell />
+    <Cell />
+    <Cell type="ice" color="1" />
+    <Cell />
+    <Cell type="ice" color="3" />
+    <Cell />
+    <Cell type="ice" color="0" />
+    <Cell type="ice" color="2" />
+    <Cell />
+    <Cell type="ice" color="3" />
+    <Cell />
+    <Cell type="ice" color="1" />
+    <Cell />
+  </Field>
+</Levels>
