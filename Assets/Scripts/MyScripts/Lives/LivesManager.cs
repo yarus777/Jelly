@@ -117,7 +117,7 @@ namespace Assets.Scripts.MyScripts.Lives
 
         private static DateTime _initialTime = new DateTime(1970, 1, 1);
 
-        private static long GetTimestamp(DateTime datetime)
+        public static long GetTimestamp(DateTime datetime)
         {
             return ((long)(datetime - _initialTime).TotalSeconds);
         }
