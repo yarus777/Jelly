@@ -98,9 +98,9 @@
         }
 
         public void SetCurrentLevel(int currentLevel) {
-            if (currentLevel == Level - 1) {
+            if (currentLevel == Level) {
                 ChangeState(GateState.Waiting);
-            } else if (currentLevel >= Level) {
+            } else if (currentLevel > Level) {
                 ChangeState(GateState.Opened);
             }
         }

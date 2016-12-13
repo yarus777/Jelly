@@ -61,7 +61,7 @@ public class LoadWinLose : MonoBehaviour {
                 int gate = GameData.numberLoadLevel / (GameData.allLevels / GameData.locationsCount);
                 //Debug.Log("gate: "+gate);
                 //Debug.Log("GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount): " + GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount));
-                if (GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount) == 0)
+                /*if (GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount) == 0)
                 {
                     PlayerPrefs.SetInt("Gate_" + gate + "_State", (int)Gate.GateStates.Waiting);
                     GamePlay.enableButtonInterface = true;
@@ -69,14 +69,12 @@ public class LoadWinLose : MonoBehaviour {
                         GamePlay.maxCompleteLevel = GameData.numberLoadLevel;
                 }
                 else
-                {
+                {*/
                     GameData.numberLoadLevel++;
-                    PlayerPrefs.SetInt("lastOpenLevel", GameData.numberLoadLevel);
-
                     Debug.Log("maxCompleteLevel: " + GamePlay.maxCompleteLevel + "\n numberLoadLevel: " + GameData.numberLoadLevel);
                     if (GamePlay.maxCompleteLevel < GameData.numberLoadLevel)
                         GamePlay.maxCompleteLevel = GameData.numberLoadLevel;
-                }
+                //}
             }
         }
 		else

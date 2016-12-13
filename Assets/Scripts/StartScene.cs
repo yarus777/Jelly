@@ -60,7 +60,7 @@ public class StartScene : MonoBehaviour {
         }
          */
 
-        PlayerPrefs.SetInt("maxCompleteLevel", 20);
+       // PlayerPrefs.SetInt("maxCompleteLevel", 10);
 
     }
 
@@ -68,7 +68,7 @@ public class StartScene : MonoBehaviour {
     IEnumerator Start () {
 		yield return new WaitForSeconds (0.5f);
         AsyncOperation loadLevel;
-        if (PlayerPrefs.GetInt("firstStart", 0) == 0)
+        /*if (PlayerPrefs.GetInt("firstStart", 0) == 0)
         {
             GameData.numberLoadLevel = 1;
             loadLevel = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("GameField");
@@ -78,7 +78,8 @@ public class StartScene : MonoBehaviour {
         {
             //loadLevel = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Map");
             loadLevel = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("TestMap");
-        }
+        }*/
+        loadLevel = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("TestMap");
 		yield return loadLevel;
 	}
 }

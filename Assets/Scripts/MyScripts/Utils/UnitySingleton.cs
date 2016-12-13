@@ -55,7 +55,7 @@ public class UnitySingleton<T> : MonoBehaviour
     {
     }
 
-    public virtual void Init()
+    public void Init()
     {
     }
 }

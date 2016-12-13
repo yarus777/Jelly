@@ -24,9 +24,11 @@
                 Gate gate;
                 var timer = gameObject.AddComponent<Timer>();
                 var savedData = savedGatesData.Find(x => x.Level == gateData.Level);
-                if (savedData != null) {
+                if (savedData != null)
+                {
+                    var timePassed = LivesManager.GetTimestamp(DateTime.UtcNow) - savingTime;
                     gate = new Gate(gateData.Level, timer, savedData.Status,
-                        TimeSpan.FromSeconds(savedData.TimeLeftValue - savingTime));
+                        TimeSpan.FromSeconds(savedData.TimeLeftValue - timePassed));
                 }
                 else {
                     gate = new Gate(gateData.Level, timer, GateState.Locked,
@@ -35,12 +37,14 @@
                 _gates.Add(gate);
             }
             CurrentGates = _gates.FirstOrDefault(x => x.Status == GateState.Waiting);
+            Debug.Log("GATES LOADED");
         }
 
         public void OnCurrentLevelChanged(int currentLevel) {
             foreach (var gate in _gates) {
                 gate.SetCurrentLevel(currentLevel);
             }
+            CurrentGates = _gates.FirstOrDefault(x => x.Status == GateState.Waiting);
         }
 
         private Gate.State Parse(JSONObject json) {

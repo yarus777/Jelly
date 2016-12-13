@@ -46,16 +46,22 @@
             return buttons;
         }
 
-        private bool IsLevelOpened(int number) {
-            if (number > GamePlay.maxCompleteLevel) {
-                return false;
-            }
-            var currentGates = GatesStorage.Instance.CurrentGates;
-            if (currentGates == null) {
-                return true;
-            }
+        private bool IsLevelOpened(int number)
+        {
+            return number <= MaxAvailableLevel;
+        }
 
-            return number < currentGates.Level;
+        private int MaxAvailableLevel
+        {
+            get
+            {
+                var currentGates = GatesStorage.Instance.CurrentGates;
+                if (currentGates == null)
+                {
+                    return GamePlay.maxCompleteLevel;
+                }
+                return Mathf.Min(GamePlay.maxCompleteLevel, currentGates.Level - 1);
+            }
         }
 
         private void OnLevelClicked(int levelNumber) {
