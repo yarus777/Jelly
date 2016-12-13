@@ -7,11 +7,13 @@
         private float _timeLeft;
         private bool _isStarted;
 
-        public virtual void StartTimer(float initialValue) {
+        public float Interval { get; set; }
+
+        public void StartTimer() {
             if (IsStarted) {
                 return;
             }
-            _timeLeft = initialValue;
+            _timeLeft = Interval;
             IsStarted = true;
             StartCoroutine(WaitForSeconds());
         }
@@ -22,11 +24,13 @@
                 yield return null;
             }
             _timeLeft = 0;
-            OnTick(true);
+            OnTick();
         }
 
         public TimeSpan TimeLeft {
-            get { return TimeSpan.FromSeconds(_timeLeft); }
+            get {
+                return TimeSpan.FromSeconds(IsStarted ? _timeLeft : Interval);
+            }
         }
 
         public bool IsStarted {
@@ -37,10 +41,10 @@
             }
         }
 
-        private void OnTick(bool isRealtime) {
+        private void OnTick() {
             StopTimer();
             if (Tick != null) {
-                Tick.Invoke(isRealtime);
+                Tick.Invoke();
             }
         }
 
@@ -51,7 +55,7 @@
         protected virtual void OnActiveChanged(bool isActive) {
         }
 
-        public event Action<bool> Tick;
+        public event Action Tick;
 
         private void OnDestroy() {
             if (Destroyed != null) {

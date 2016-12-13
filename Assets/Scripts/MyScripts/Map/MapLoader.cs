@@ -22,7 +22,8 @@
 
         private void Awake() {
             // загружаем ворота
-            _gatesController.Load(GamePlay.maxCompleteLevel);
+            _gatesController.Load();
+            GatesStorage.Instance.OnCurrentLevelChanged(GamePlay.maxCompleteLevel);
 
             // загружаем уровни
             _buttons = Load();
@@ -30,6 +31,8 @@
             var anim = currentLevelButton.gameObject.AddComponent<Animation>();
             anim.AddClip(_currentLevelButtonAnimation, ACTIVE_LEVEL_ANIMATION_NAME);
             anim.Play(ACTIVE_LEVEL_ANIMATION_NAME);
+
+            
         }
 
         private List<LevelButton> Load() {
@@ -49,7 +52,7 @@
             if (number > GamePlay.maxCompleteLevel) {
                 return false;
             }
-            var currentGates = _gatesController.CurrentGates;
+            var currentGates = GatesStorage.Instance.CurrentGates;
             if (currentGates == null) {
                 return true;
             }
@@ -65,7 +68,8 @@
                 GameData.numberLoadLevel = levelNumber;
                 PopupsController.Instance.Show(PopupType.StartLevel);
                 GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);
-            } else {
+            }
+            else {
                 PopupsController.Instance.Show(PopupType.NoLifes);
                 GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowNotMoves, false);
             }

@@ -82,9 +82,9 @@ namespace Assets.Scripts.MyScripts.Lives
 
         private void OnLivesCountChanged(int count, int prevCount)
         {
-            if (count < MAX_LIVES && !_livesTimer.IsStarted)
-            {
-                _livesTimer.StartTimer(_currentTimerInterval);
+            if (count < MAX_LIVES && !_livesTimer.IsStarted) {
+                _livesTimer.Interval = _currentTimerInterval;
+                _livesTimer.StartTimer();
             }
             if (LivesCountChanged != null)
             {
@@ -109,7 +109,7 @@ namespace Assets.Scripts.MyScripts.Lives
             get { return _livesTimer.TimeLeft; }
         }
 
-        private void OnTimer(bool isRealtime)
+        private void OnTimer()
         {
             AddLife();
             //_livesTimer.StartTimer(LIVES_REFILL_INTERVAL);

@@ -1,9 +1,7 @@
 ﻿namespace Assets.Scripts.MyScripts.Gates {
     using System;
     using Lives;
-    using Popups;
     using UnityEngine;
-    using UnityEngine.UI;
 
     public enum GateState {
         Locked,
@@ -11,109 +9,96 @@
         Opened
     }
 
-    internal class Gate : MonoBehaviour {
-        [SerializeField]
-        private int _levelNumber;
-
-        [Header("Unlock Time")]
-        [SerializeField]
-        private int _hours;
-
-        [SerializeField]
-        private int _minutes;
-
-        [SerializeField]
-        private int _seconds;
-
-        [Header("Visual State")]
-        [SerializeField]
-        private Button _unlockButton;
-
-        [SerializeField]
-        private GatesTimer _timer;
-
-        private TimeSpan _unlockTime;
+    internal class Gate {
         private GateState _state;
 
-        public int Level {
-            get { return _levelNumber; }
-        }
+        public readonly int Level;
+        private readonly Timer _timer;
 
-        private void Awake() {
-            _unlockTime = new TimeSpan(_hours, _minutes, _seconds);
-            ChangeState(GateState.Locked);
-        }
+        public event Action<GateState> StateChanged;
 
-        public void OnClick() {
-            if (_state != GateState.Waiting) {
-                return;
+        public Gate(int levelNumber, Timer timer, GateState state, TimeSpan timeLeft) {
+            Level = levelNumber;
+            _timer = timer;
+            _timer.Tick += OnTimer;
+            _timer.Interval = (float) timeLeft.TotalSeconds;
+            if (state == GateState.Waiting && timeLeft.TotalSeconds <= 0) {
+                ChangeState(GateState.Opened);
             }
-            PopupsController.Instance.Show(PopupType.UnlockGates);
+            else {
+                ChangeState(state);
+            }
         }
 
-        public event Action<Gate> Opened;
+        private void OnTimer() {
+            ChangeState(GateState.Opened);
+        }
+
+        public GateState Status {
+            get { return _state; }
+        }
+
+        public TimeSpan TimeLeft { get { return _timer.TimeLeft; } }
 
         private void ChangeState(GateState newState) {
             if (newState == _state) {
                 return;
             }
             _state = newState;
-            switch (newState) {
-                case GateState.Locked:
-                    _timer.StopTimer();
-                    UpdateVisualState();
-                    break;
+            switch (_state) {
                 case GateState.Waiting:
-                    _timer.StartTimer((float) _unlockTime.TotalSeconds);
-                    UpdateVisualState();
+                    _timer.StartTimer();
                     break;
-                case GateState.Opened:
-                    if (Opened != null) {
-                        Opened(this);
-                    }
+                default: 
+                    _timer.StopTimer();
                     break;
+            }
+            Debug.Log(this);
+            if (StateChanged != null) {
+                StateChanged.Invoke(newState);
             }
         }
 
-        private void UpdateVisualState() {
-            _unlockButton.interactable = _state == GateState.Waiting;
+        public override string ToString() {
+            return string.Format("Gates: level {0}, state {1}, time: {2}", Level, _state, _timer.TimeLeft);
+        }
+
+        public State Save() {
+            return new State(Level, _state, (float) _timer.TimeLeft.TotalSeconds);
         }
 
         public class State {
+            public readonly int Level;
             public readonly GateState Status;
             public readonly float TimeLeftValue;
-            public readonly long SavingTime;
 
-            public State(GateState state, float timeLeftValue = 0, long savingTime = 0) {
+            public State(int level, GateState state, float timeLeftValue) {
+                Level = level;
                 Status = state;
                 TimeLeftValue = timeLeftValue;
-                SavingTime = savingTime;
-            }
-
-            public State() {
-                Status = GateState.Locked;
-                //TimeLeftValue = LIVES_REFILL_INTERVAL;
-                SavingTime = LivesManager.GetTimestamp(DateTime.UtcNow);
             }
 
             public JSONObject ToJSON() {
                 var json = new JSONObject();
                 json.AddField("state", (int) Status);
-                if (Status == GateState.Waiting) {
-                    json.AddField("timer", TimeLeftValue);
-                    json.AddField("time", SavingTime.ToString());
-                }
+                json.AddField("level", Level);
+                json.AddField("timer", TimeLeftValue);
                 return json;
             }
 
             public static State FromJson(JSONObject json) {
-                var status = (GateState) Enum.Parse(typeof (GateState), json["state"].ToString().Trim('\"'), true);
-                if (status != GateState.Waiting) {
-                    return new State(status);
-                }
+                var status = (GateState) int.Parse(json["state"].ToString().Trim('\"'));
+                var level = int.Parse(json["level"].ToString().Trim('\"'));
                 var timer = float.Parse(json["timer"].ToString().Trim('\"'));
-                var time = long.Parse(json["time"].ToString().Trim('\"'));
-                return new State(status, timer, time);
+                return new State(level, status, timer);
+            }
+        }
+
+        public void SetCurrentLevel(int currentLevel) {
+            if (currentLevel == Level - 1) {
+                ChangeState(GateState.Waiting);
+            } else if (currentLevel >= Level) {
+                ChangeState(GateState.Opened);
             }
         }
     }

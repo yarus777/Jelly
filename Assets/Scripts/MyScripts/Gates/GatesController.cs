@@ -1,32 +1,21 @@
 ﻿namespace Assets.Scripts.MyScripts.Gates {
+    using System.Linq;
     using UnityEngine;
 
     internal class GatesController : MonoBehaviour {
-        private Gate[] _gates;
-        public Gate CurrentGates { get; private set; }
+        private GateUI[] _gates;
 
-        public void Load(int maxCompleteLevel) {
-            _gates = GetComponentsInChildren<Gate>();
+        public void Load() {
+            _gates = GetComponentsInChildren<GateUI>();
+            var gates = GatesStorage.Instance.Gates.ToList();
             foreach (var gate in _gates) {
-                gate.Opened += OnGateOpened;
-            }
-            InitGates(maxCompleteLevel);
-        }
-
-        private void InitGates(int maxOpenedLevel) {
-            foreach (var gate in _gates) {
-            }
-        }
-
-        private void OnDestroy() {
-            if (_gates != null) {
-                foreach (var gate in _gates) {
-                    gate.Opened -= OnGateOpened;
+                var data = gates.FirstOrDefault(x => x.Level == gate.Level);
+                if (data == null) {
+                    Destroy(gate.gameObject);
+                    continue;
                 }
+                gate.Init(data);
             }
-        }
-
-        private void OnGateOpened(Gate gate) {
         }
     }
 }
