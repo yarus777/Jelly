@@ -15,7 +15,7 @@
         public readonly int Level;
         private readonly Timer _timer;
 
-        public event Action<GateState> StateChanged;
+        public event Action<Gate, GateState> StateChanged;
 
         public Gate(int levelNumber, Timer timer, GateState state, TimeSpan timeLeft) {
             Level = levelNumber;
@@ -49,13 +49,16 @@
                 case GateState.Waiting:
                     _timer.StartTimer();
                     break;
+                case GateState.Opened:
+                    _timer.Interval = 0;
+                    break;
                 default: 
                     _timer.StopTimer();
                     break;
             }
             Debug.Log(this);
             if (StateChanged != null) {
-                StateChanged.Invoke(newState);
+                StateChanged.Invoke(this, newState);
             }
         }
 

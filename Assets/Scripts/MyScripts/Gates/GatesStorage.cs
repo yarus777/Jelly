@@ -26,7 +26,7 @@
                 var savedData = savedGatesData.Find(x => x.Level == gateData.Level);
                 if (savedData != null) {
                     gate = new Gate(gateData.Level, timer, savedData.Status,
-                        TimeSpan.FromSeconds(savedData.TimeLeftValue));
+                        TimeSpan.FromSeconds(savedData.TimeLeftValue - savingTime));
                 }
                 else {
                     gate = new Gate(gateData.Level, timer, GateState.Locked,
@@ -34,6 +34,7 @@
                 }
                 _gates.Add(gate);
             }
+            CurrentGates = _gates.FirstOrDefault(x => x.Status == GateState.Waiting);
         }
 
         public void OnCurrentLevelChanged(int currentLevel) {

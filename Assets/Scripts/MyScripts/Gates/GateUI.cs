@@ -19,6 +19,8 @@
         private Gate _gate;
         public int Level { get {return _levelNumber;} }
 
+        public event Action<GateUI, GateState> StateChanged;
+
         public void Init(Gate gate) {
             _gate = gate;
             _gate.StateChanged += OnStateChanged;
@@ -51,8 +53,11 @@
             }
         }
 
-        private void OnStateChanged(GateState newState) {
+        private void OnStateChanged(Gate gate, GateState gateState) {
             UpdateVisualState();
+            if (StateChanged != null) {
+                StateChanged.Invoke(this, gateState);
+            }
         }
 
         public void OnClick() {

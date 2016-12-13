@@ -31,8 +31,6 @@
             var anim = currentLevelButton.gameObject.AddComponent<Animation>();
             anim.AddClip(_currentLevelButtonAnimation, ACTIVE_LEVEL_ANIMATION_NAME);
             anim.Play(ACTIVE_LEVEL_ANIMATION_NAME);
-
-            
         }
 
         private List<LevelButton> Load() {
