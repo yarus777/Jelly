@@ -33,7 +33,17 @@
         Count,
         Moves,
         NoNetwork,
-        NoVideos
+        NoVideos,
+        PauseTxt,
+        MovesTxt,
+        ScoreTxt,
+        LoseTxt1,
+        LoseTxt2,
+        GiveUpTxt,
+        NoMovesTitleTxt,
+        NoMovesTxt,
+        ScoredTxt,
+        NewRecordTxt
     }
 
     public enum Language {
@@ -75,6 +85,16 @@
             {"Moves","Ходы"},
             {"Check your internet connection","Проверьте подключение к интернету"},
             {"No available videos","Нет доступных видео"},
+            {"Pause","Пауза"},
+            {"Moves","Ходы"},
+		    {"score", "очки"},
+            {"You lost","Вы проиграли"},
+            {"Try again!","Попробуйте еще раз!"},
+            {"Give up", "Сдаться"},
+            {"No moves left", "У вас не осталось ходов"},
+            {"No moves? Watch the video to continue playing!", "Закончились ходы? Посмотри видео и получи еще!"},
+            {"Scored", "Набрано"},
+            {"New record", "Новый рекорд"}
         };
 
         public static string GetText (WhatText what)

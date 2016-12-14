@@ -10,17 +10,11 @@ public class ButtonsInterface : MonoBehaviour
     {
         Settings,
         PlayGame,
-        OKNotLife,
-        WinMainMenu,
-        WinRestart,
-        WinNextLevel,
-        CloseSettings,
         Sound,
         Music,
         Capitulate,
-        Buy,
-        LoseMainMenu,
-        LoseRestart
+        Buy
+
     }
 
     public Buttons button;
@@ -56,40 +50,15 @@ public class ButtonsInterface : MonoBehaviour
                 case Buttons.PlayGame:
                     PreparePlayGame();
                     break;
-                case Buttons.OKNotLife:
-                    OkNotLife();
-                    break;
-                case Buttons.WinMainMenu:
-                    PrepareWinMainMenu();
-                    break;
-                case Buttons.WinNextLevel:
-                    PrepareWinNextLevel();
-                    break;
-                case Buttons.WinRestart:
-                    PrepareWinRestart();
-                    break;
-                case Buttons.CloseSettings:
-                    CloseSettings();
-                    break;
                 case Buttons.Music:
                     SwitchMusic();
                     break;
                 case Buttons.Sound:
                     SwitchSound();
                     break;
-                case Buttons.Capitulate:
-                    Capitulate();
-                    break;
                 case Buttons.Buy:
                     Buy();
                     break;
-                case Buttons.LoseMainMenu:
-                    PrepareloseMainMenu();
-                    break;
-                case Buttons.LoseRestart:
-                    LoseRestart();
-                    break;
-
             }
             UpdateState(StateButton.Normal);
         }
@@ -189,175 +158,6 @@ public class ButtonsInterface : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("SplashScreen");
     }
 
-    public void OkNotLife()
-    {
-        GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowClose, false);
-        GamePlay.interfaceMap = StateInterfaceMap.Start;
-        if (GamePlay.interfaceGame == StateInterfaceGame.NotLife)
-        {
-            GamePlay.interfaceGame = StateInterfaceGame.Pause;
-        }
-        else
-        {
-            GamePlay.EnableButtonsMap(true);
-        }
-        Destroy(this.transform.parent.gameObject);
-
-    }
-
-
-    private void PrepareWinMainMenu()
-    {
-        Debug.Log(GameData.numberLoadLevel);
-        if (PlayerPrefs.GetInt("firstWin", 0) == 0 && GameData.numberLoadLevel - 1 == 1)
-        {
-            Debug.Log("AdSDK Send Event\n\tWIN_1LEVEL_CLICK_MENU");
-            AdSDK.SendEvent("WIN_1LEVEL_CLICK_MENU");
-            PlayerPrefs.SetInt("firstWin", 1);
-        }
-        GameData.numberLoadLevel++;
-        GamePlay.enableButtonInterface = false;
-        GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonToMap, false);
-        Invoke("WinMainMenu", 0.7f);
-    }
-
-    private void PrepareloseMainMenu()
-    {
-        GamePlay.enableButtonInterface = false;
-        GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonToMap, false);
-        Invoke("WinMainMenu", 0.7f);
-    }
-    private void WinMainMenu()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ToMapScene");
-    }
-
-    private void PrepareWinNextLevel()
-    {
-        if (PlayerPrefs.GetInt("firstWin", 0) == 0 && GameData.numberLoadLevel - 1 == 1)
-        {
-            //Debug.Log("AdSDK Send Event\n\tWIN_1LEVEL_CLICK_NEXT");
-            AdSDK.SendEvent("WIN_1LEVEL_CLICK_NEXT");
-            PlayerPrefs.SetInt("firstWin", 1);
-        }
-        if (GameData.numberLoadLevel < 100)
-        {
-            var _isTutorialShown = PlayerPrefs.GetInt("tutorial_map", 0) == 1;
-            if (GameData.numberLoadLevel == 6 && !_isTutorialShown)
-            {
-                Debug.Log("Set Start btn");
-                GamePlay.interfaceMap = StateInterfaceMap.Start;
-            }
-            else
-            {
-                Debug.Log("Set StartNextLvl btn");
-                GamePlay.interfaceMap = StateInterfaceMap.StartNextLvl;
-            }
-            GamePlay.enableButtonInterface = false;
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPlay, false);
-            Debug.Log("sheet is here");          
-            Invoke("WinNextLevel", 0.7f);
-        }
-        else {
-            GamePlay.enableButtonInterface = false;
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPlay, false);
-            Invoke("WinNextLevel", 0.7f);
-        }
-
-    }
-
-    private void WinNextLevel()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ToMapScene");
-    }
-
-    private void PrepareWinRestart()
-    {
-        if (PlayerPrefs.GetInt("firstWin", 0) == 0 && GameData.numberLoadLevel - 1 == 1)
-        {
-            Debug.Log("AdSDK Send Event\n\tWIN_1LEVEL_CLICK_RESTART");
-            AdSDK.SendEvent("WIN_1LEVEL_CLICK_RESTART");
-            PlayerPrefs.SetInt("firstWin", 1);
-        }
-        if (LivesManager.Instance.LivesCount < 1)
-        {
-            CreateNotLife();
-            return;
-        }
-        //GamePlay.ChangeCountLife(-1);
-        LivesManager.Instance.SpendLife(1);
-        GamePlay.enableButtonInterface = false;
-        GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonReplay, false);
-
-        Invoke("WinRestart", 0.7f);
-    }
-
-    private void CreateNotLife()
-    {
-        GamePlay.interfaceGame = StateInterfaceGame.NotLife;
-        GameObject ob = Instantiate(Resources.Load("Prefabs/Interface/NotLife")) as GameObject;
-        ob.transform.localPosition = new Vector3(0f, 0f, -5f);
-        ob.transform.localScale = new Vector3(0.75f, 0.75f, 1);
-        GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowNotMoves, false);
-    }
-    private void WinRestart()
-    {
-        GameData.numberLoadLevel--;
-//#if UNITY_ANDROID
-        Debug.Log("AdSDK Send Event - REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-        AdSDK.SendEvent("REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-//#endif
-
-        GamePlay.RestartLevel();
-    }
-    private void LoseRestart()
-    {
-        if (LivesManager.Instance.LivesCount < 1)
-        {
-            CreateNotLife();
-            return;
-        }
-        LivesManager.Instance.SpendLife(1);
-        //GamePlay.ChangeCountLife(-1);
-//#if UNITY_ANDROID
-        Debug.Log("AdSDK Send Event - REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-        AdSDK.SendEvent("REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-//#endif
-
-        GamePlay.RestartLevel();
-    }
-    private void CloseSettings()
-    {
-        if (GamePlay.interfaceMap != StateInterfaceMap.Start)
-        {
-            GamePlay.stateUI = EUI.Map;
-
-            Destroy(transform.parent.gameObject);
-            GamePlay.interfaceMap = StateInterfaceMap.Start;
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowClose, false);
-        }
-
-        if (GamePlay.interfaceGame == StateInterfaceGame.Settings)
-        {
-#if UNITY_ANDROID
-           // AdSDK.SetBannerVisible(false);
-#endif
-            if (GamePlay.interfacePause != null)
-            {
-                Destroy(GamePlay.interfacePause);
-            }
-            GamePlay.SetInput(true);
-            GamePlay.interfaceGame = StateInterfaceGame.Game;
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPlay, false);
-            GamePlay.EnableButtonsMap(true);
-            Time.timeScale = 1;
-            if (GamePlay.inventoryCollider != null)
-            {
-                GamePlay.inventoryCollider.enabled = true;
-            }
-        }
-    }
-
     private void SwitchMusic()
     {
         if (MusicManager.Instance.IsMusic)
@@ -408,11 +208,6 @@ public class ButtonsInterface : MonoBehaviour
         spriteRenderer.sprite = states[capture];
     }
 
-    private void Capitulate()
-    {
-        GamePlay.lvlManager.Capitulate();
-        Destroy(transform.parent.gameObject);
-    }
 
     private void Buy()
     {

@@ -47,7 +47,7 @@ public class TutorialManager{
 
 	public void NextStep()
 	{
-        Debug.Log("currentTutorial " + currentTutorial);
+
 		if(currentTutorial!=null)
 		{
             

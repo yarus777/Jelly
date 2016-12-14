@@ -17,13 +17,11 @@ public abstract class BaseTutorial {
 	public void StartTutorial ()
 	{
 //		GamePlay.pauseCollider.enabled = false;
-        Debug.Log("StartTutorial() Base");
 		NextStepTutorial ();
 	}
 
 	public void NextStepTutorial ()
 	{
-        Debug.Log("NextStepTutorial() Base");
 		StepTutorial ();
 #if DebugInfo
 		Debug.Log ("Step: " +(currentStep+1)+" completed");
@@ -442,14 +440,6 @@ public abstract class BaseTutorial {
 				{
 					spriteRenderer.color = new Color(1f,1f,1f,1f);
 				}
-				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.inventory.GetComponentsInChildren<SpriteRenderer>())
-				{
-					spriteRenderer.color = new Color(1f,1f,1f,1f);
-				}
-//				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.panels)
-//				{
-//					spriteRenderer.color = new Color(1f,1f,1f,1f);
-//				}
 				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>())
 				{
 					spriteRenderer.color = new Color(1f,1f,1f,1f);
@@ -485,14 +475,6 @@ public abstract class BaseTutorial {
 				{
 					spriteRenderer.color = new Color(0.4f,0.4f,0.4f,1f);
 				}
-				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.inventory.GetComponentsInChildren<SpriteRenderer>())
-				{
-					spriteRenderer.color = new Color(0.4f,0.4f,0.4f,1f);
-				}
-//				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.panels)
-//				{
-//					spriteRenderer.color = new Color(0.4f,0.4f,0.4f,1f);
-//				}
 				foreach(SpriteRenderer spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>())
 				{
 					spriteRenderer.color = new Color(0.4f,0.4f,0.4f,1f);

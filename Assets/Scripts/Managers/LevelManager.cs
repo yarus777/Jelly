@@ -10,9 +10,8 @@ public class LevelManager : CacheTransform {
 	public GameObject startText;
 	Limit typeLevel;
 
-//	private bool endGame = false;
 	private bool startTutorial = false;
-	//private bool oneGetMove = false;
+
 
 	public LevelManager()
 	{
@@ -20,29 +19,13 @@ public class LevelManager : CacheTransform {
 
 	}
 
-	void Awake()
-	{
 
-	}
-
-	// Use this for initialization
 	void Start () {
 		GameData.Reset ();
 		GamePlay.Restart ();
 
 		GamePlay.Reset ();
 
-//		if(PlayerPrefs.GetInt("noRateUs") == 0)
-//		{
-//			if(PlayerPrefs.GetInt("countRateUs")>=GamePlay.rateUsUI.GetCount())
-//			{
-//				GamePlay.interfaceMap = StateInterfaceMap.Interface1;
-//			}
-//			else
-//			{
-//				GamePlay.interfaceMap = StateInterfaceMap.Start;
-//			}
-//		}
 		GameData.parser.ParseLevel (GameData.numberLoadLevel);
 		if (GameData.parser.levelType == Task.Diamond) {
 			GameData.diamondManager.SetData (GameData.parser.minDiamondInScene, 
@@ -63,33 +46,15 @@ public class LevelManager : CacheTransform {
 			GameData.colorChanses.Add(chance);
 		}
 
-//		Debug.Log ("New Parce: bomb " + GameData.parser.isBombs + " arrow " + GameData.parser.isArrows + " prism " + GameData.parser.isPrisms + " bonus " + GameData.parser.isBonusTime);
-
-//		GameField.jamSprites = Resources.LoadAll<Sprite> ("Atlases/Jam");
-		
-		//GameData.starManager =  (Instantiate (Resources.Load<GameObject> ("Prefabs/Interface/stars")) as GameObject).GetComponent<StarManager>();
 
 		GameField.EditorLevel ();
-//		GameData.manager.ResetShadows();
-//		GamePlay.ChangeImageJam ();
-
 		GamePlay.backManager = new BackManager ();
-		//GamePlay.backManager.CreateBack ();
 		GamePlay.backManager.CreateGrid ();
 		GamePlay.backManager.Clear ();
 		GamePlay.backManager.Visible ();
 		Instantiate (Resources.Load<GameObject> ("Prefabs/Interface/GameInterface"));
-
-		//ResetShareds ();
-//		GameData.manager.SetShadows (StatementShadow.Off, Colors.Blue);
-//		GameData.manager.SetShadows (StatementShadow.Off, Colors.Red);
-//		GameData.manager.SetShadows (StatementShadow.Off, Colors.Green);
-//		GameData.manager.SetShadows (StatementShadow.Off, Colors.Fiolet);
-//		GameData.manager.SetShadows (StatementShadow.Off, Colors.Yellow);
-
 		Stroke ();
 
-		//Tutorial ();
 	}
 
 	public void PauseStroke()
@@ -133,7 +98,6 @@ public class LevelManager : CacheTransform {
 			else
 			{
 				GamePlay.startGame = true;
-//				GameData.timer.Invoke ("Run", 0f);
 				GameData.timer.Run();
 			}
 		}
@@ -154,18 +118,8 @@ public class LevelManager : CacheTransform {
 			return;
 		}
 
-//		if(GameData.parser.isBonusTime)
-//		{
 		if(GamePlay.startBonusTime)
 		{
-//			if(GamePlay.tutorial!=null)
-//			{
-////				if(GamePlay.tutorial.isBonusTime())
-////				{
-////					Tutorial();
-////				}
-//			}
-		
 
 			GamePlay.blockPauseButton = true;
 			IsStartBonusTime();
@@ -178,7 +132,7 @@ public class LevelManager : CacheTransform {
 			IsCreateBonus();
 			return;
 		}
-//		}
+
 
 		if(IsNeedDeleteDiamond ())
 		{
@@ -220,7 +174,6 @@ public class LevelManager : CacheTransform {
 		if (GameData.manager.IsMoveObject ()) 
 		{
 			Invoke ("Stroke", GamePlay.timePhysics);
-//			Stroke();
 			return true;
 		} 
 		return false;
@@ -252,38 +205,17 @@ public class LevelManager : CacheTransform {
 			}
 
 			GameData.manager.OffsetObject();
-//			GameData.windowInterface = 1;
+
 			Instantiate(Resources.Load<GameObject>("Prefabs/Interface/LevelComplete"));
 			GamePlay.blockPauseButton = true;
 			Invoke("WinPopup", 2f);
 			GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.PopupLevelComplete, false);
-			//AddCoins();
-			//GamePlay.ChangeCountLife(1);
-//			AddLife();
 			return true;
 		}
 		return false;
 	}
 
-	//private void AddCoins()
-	//{
-	//	int level = GameData.numberLoadLevel - 1;
-	//	int countAdd = GameData.levelsSilver [level];
 
-	//	GameData.countSilver+= countAdd;
-	//	PlayerPrefs.SetInt("silver", GameData.countSilver);
-	//}
-
-	private void AddLife()
-	{
-        Debug.Log("AddLife");
-        if (LivesManager.Instance.LivesCount < 10)
-		{
-			//GamePlay.ChangeCountLife(1);
-            LivesManager.Instance.AddLife(1);
-            PlayerPrefs.SetInt("countLife", LivesManager.Instance.LivesCount);
-		}
-	}
 
 	private void WinPopup()
 	{
@@ -310,7 +242,6 @@ public class LevelManager : CacheTransform {
 			GameObject obj = Instantiate (Resources.Load<GameObject> ("Prefabs/Interface/NotMoves")) as GameObject;
 			GamePlay.blockPauseButton = true;
 			obj.transform.localPosition = new Vector3 (5.5f, 8.25f, -3);
-			//obj.transform.localScale = new Vector3(0.5f,0.5f,1);
 			GamePlay.soundManager.CreateSoundTypeUI (SoundsManager.UISoundType.WindowNotMoves, false);
 
 	}
@@ -388,9 +319,7 @@ public class LevelManager : CacheTransform {
 			}
 
 			GameData.manager.OffsetObject();
-//			GameData.windowInterface = 1;
 			Instantiate(Resources.Load<GameObject>("Prefabs/Interface/LevelComplete"));
-			//GamePlay.ChangeCountLife(1);
 			GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.PopupLevelComplete, false);
 			Invoke("WinPopup", 2f);
 		}

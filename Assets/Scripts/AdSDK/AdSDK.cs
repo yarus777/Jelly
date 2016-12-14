@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MyScripts.Gates;
 using Assets.Scripts.MyScripts.Lives;
 
 #if UNITY_IOS
@@ -295,7 +296,6 @@ public class AdSDK : MonoBehaviour
                     break;
                 case 3:
                     stateInterstitial = STATE.Fail;
-
                     break;
                 case 4:
                     stateInterstitial = STATE.Dismiss;                   
@@ -333,7 +333,7 @@ public class AdSDK : MonoBehaviour
         {
             Debug.Log("Add Timer");
             forTimer = false;
-            InAppManager.CompleteTimer();
+            GatesStorage.Instance.CurrentGates.AddTime(TimeSpan.FromMinutes(30));
         }
         if(forCoins)
         {

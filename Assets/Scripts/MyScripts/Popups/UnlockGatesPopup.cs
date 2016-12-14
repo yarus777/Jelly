@@ -42,7 +42,7 @@ namespace Assets.Scripts.MyScripts.Popups
         public void OnVideoBtnClick()
         {
             //GamePlay.mapLocker.activeGate.Unlocker();
-            Close();
+            //Close();
         }
     }
 }

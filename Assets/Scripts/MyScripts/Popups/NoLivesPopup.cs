@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.MyScripts.Popups
 {
-    class NoLifesPopup : Popup
+    class NoLivesPopup : Popup
     {
 
         [SerializeField] private Text timerTxt;

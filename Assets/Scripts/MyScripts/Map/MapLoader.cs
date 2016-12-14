@@ -1,4 +1,7 @@
-﻿namespace Assets.Scripts.MyScripts.Map {
+﻿using System.Collections;
+using UnityEngine.UI;
+
+namespace Assets.Scripts.MyScripts.Map {
     using System.Collections.Generic;
     using System.Linq;
     using Gates;
@@ -19,6 +22,9 @@
         private AnimationClip _currentLevelButtonAnimation;
 
         private List<LevelButton> _buttons;
+
+        [SerializeField]
+        private ScrollRect scroll;
 
         private void Awake() {
             // загружаем ворота
@@ -74,9 +80,31 @@
                 GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);
             }
             else {
-                PopupsController.Instance.Show(PopupType.NoLifes);
+                PopupsController.Instance.Show(PopupType.NoLives);
                 GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowNotMoves, false);
             }
+        }
+
+        void OnDestroy()
+        {
+            SavePos();
+        }
+        private void LoadPos()
+        {
+
+            scroll.verticalScrollbar.value = PlayerPrefs.GetFloat("ScrollPos", 0f);
+        }
+
+        private void SavePos()
+        {
+            PlayerPrefs.SetFloat("ScrollPos", scroll.verticalScrollbar.value);
+            PlayerPrefs.Save();
+        }
+
+        public IEnumerator Start()
+        {
+            yield return null;
+            LoadPos();
         }
     }
 }

@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MyScripts.Popups;
 
 public class LoadWinLose : MonoBehaviour {
 
-	// Use this for initialization
-	void Awake () {
-//#if UNITY_ANDROID
-        Debug.Log("maxCompleteLevel " + GamePlay.maxCompleteLevel + " fullScreenCounterLose " + GameData.fullScreenCounterLose);
+	void Start () {
+
 	    if (GamePlay.maxCompleteLevel >= 5)
 	    {
 	        if (GameData.fullScreenCounterLose%2 == 0)
 	        {
-	            Debug.Log("AdSDK: Show Full Screen Lose");
+	            Debug.Log("AdSDK: Show FullScreen Lose");
                 #if !UNITY_EDITOR
 	            AdSDK.ShowIntersisialAd();
                 #endif
@@ -23,7 +22,7 @@ public class LoadWinLose : MonoBehaviour {
 	    {
 	        AdSDK.SetBannerVisible(true);
 	    }
-//#endif
+
         if (GamePlay.WinLevel())
         {
             string level = "starsLevel" + GameData.numberLoadLevel;
@@ -43,7 +42,9 @@ public class LoadWinLose : MonoBehaviour {
                 PlayerPrefs.SetInt(level, GamePlay.countStarsLevel);
                 PlayerPrefs.Save();
             }
-            Instantiate(Resources.Load("Prefabs/Interface/Win"));
+
+            PopupsController.Instance.Show(PopupType.Win);
+            //Instantiate(Resources.Load("Prefabs/Interface/Win"));
             GameData.fullScreenCounterWin++;
 
 #if UNITY_ANDROID
@@ -56,25 +57,12 @@ public class LoadWinLose : MonoBehaviour {
             AdSDK.SendEvent("FINISHED_LEVEL_" + GameData.numberLoadLevel.ToString("000") + "_STARS_" + GamePlay.countStarsLevel);
 #endif
             if (GameData.numberLoadLevel != GameData.allLevels)
-            {
-                
-                int gate = GameData.numberLoadLevel / (GameData.allLevels / GameData.locationsCount);
-                //Debug.Log("gate: "+gate);
-                //Debug.Log("GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount): " + GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount));
-                /*if (GameData.numberLoadLevel % (GameData.allLevels / GameData.locationsCount) == 0)
-                {
-                    PlayerPrefs.SetInt("Gate_" + gate + "_State", (int)Gate.GateStates.Waiting);
-                    GamePlay.enableButtonInterface = true;
-                    if (GamePlay.maxCompleteLevel < GameData.numberLoadLevel)
-                        GamePlay.maxCompleteLevel = GameData.numberLoadLevel;
-                }
-                else
-                {*/
+            {               
                     GameData.numberLoadLevel++;
                     Debug.Log("maxCompleteLevel: " + GamePlay.maxCompleteLevel + "\n numberLoadLevel: " + GameData.numberLoadLevel);
                     if (GamePlay.maxCompleteLevel < GameData.numberLoadLevel)
                         GamePlay.maxCompleteLevel = GameData.numberLoadLevel;
-                //}
+
             }
         }
 		else
@@ -86,8 +74,8 @@ public class LoadWinLose : MonoBehaviour {
                 PlayerPrefs.SetInt(level, 0);
                 PlayerPrefs.Save();
             }
-            Instantiate(Resources.Load("Prefabs/Interface/Lose"));
-
+            //Instantiate(Resources.Load("Prefabs/Interface/Lose"));
+		    PopupsController.Instance.Show(PopupType.Lose);
 #if UNITY_ANDROID
             Debug.Log("AdSDK: SEND EVENT - FAILED_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
             AdSDK.SendEvent("FAILED_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
@@ -95,4 +83,7 @@ public class LoadWinLose : MonoBehaviour {
         }
 		PlayerPrefs.SetInt ("countRateUs", PlayerPrefs.GetInt("countRateUs")+1);
 	}
+
+
+
 }

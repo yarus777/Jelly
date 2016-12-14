@@ -60,7 +60,7 @@ public class StartScene : MonoBehaviour {
         }
          */
 
-       // PlayerPrefs.SetInt("maxCompleteLevel", 10);
+       PlayerPrefs.SetInt("maxCompleteLevel", 10);
 
     }
 

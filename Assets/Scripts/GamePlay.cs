@@ -223,7 +223,6 @@ public static class GamePlay {
 
 	public static MovesUI moveUI;
 	public static PrismUI prismUI;
-	public static PUpsUI puUI;
 	public static PU puActive = PU.Empty;
 
 	public static BackUI backUI;
@@ -237,7 +236,6 @@ public static class GamePlay {
 
 	public static bool notDeleteObject = false;
 
-	public static NotLifeInterface notLifeUI;
 
 	public static LoadVideo loadVideo;
 
@@ -476,32 +474,6 @@ public static class GamePlay {
 		}
 	}
 
-	public static void SwitchPUsUI(bool active)
-	{
-		if(active)
-		{
-			if(GamePlay.moveUI!=null)
-			{
-				GamePlay.moveUI.MoveSwitch(false);
-			}
-			if(GamePlay.puUI!=null)
-			{
-				GamePlay.puUI.OpenPU();
-			}
-		}
-		else
-		{
-			if(GamePlay.moveUI!=null)
-			{
-				GamePlay.moveUI.MoveSwitch(true);
-			}
-			if(GamePlay.puUI!=null)
-			{
-				GamePlay.puUI.ClosePU();
-			}
-		}
-	}
-
 	/// <summary>
 	/// Проверка расположения объекта.
 	/// </summary>
@@ -680,27 +652,10 @@ public static class GamePlay {
 			}
 
 
-//			// Puddle main code
-//			if(isPuddle)
-//			{
-//				AttackPuddle(selectedObjects);
-//			}
-
-			GameData.manager.OffsetObject();
-			if(inventoryCollider.GetComponent<InventoryButtons>().button == InventoryButtons.Buttons.Cancel)
-			{
-				inventoryCollider.GetComponent<InventoryButtons>().CancelClick();
-			}
-//			SwitchPUsUI(false);
 		}
 		else if(selectedObjects.Count == 1)
 		{
 			CreatePU(selectedObjects[0]);
-//			if(stateFireball
-//			   && selectedObjects[0].GetTypeObject() == ObjectTypes.Jelly)
-//			{
-//				DeleteColorJelly(selectedObjects[0].iColor.GetColor());
-//			}
 		}
 
 		if(tutorial==null)
@@ -752,18 +707,7 @@ public static class GamePlay {
 						GameField.ReplaceObject(property, type, Colors.Prism);
 						break;
 				}
-				if(inventoryCollider.GetComponent<InventoryButtons>().button == InventoryButtons.Buttons.Cancel)
-				{
-					inventoryCollider.GetComponent<InventoryButtons>().CancelClick();
-				}
-//				SwitchPUsUI(false);
-//				if(inventoryCollider!=null)
-//				{
-//					foreach(CountInventory countInventory in inventoryCollider.GetComponentsInChildren<CountInventory>())
-//					{
-//						countInventory.UpdateState();
-//					}
-//				}
+
 			}
 			else
 			{
@@ -771,10 +715,6 @@ public static class GamePlay {
 			}
 		}
 
-//		if(inventoryCollider.GetComponent<InventoryButtons>().button == InventoryButtons.Buttons.Cancel)
-//		{
-//			inventoryCollider.GetComponent<InventoryButtons>().CancelClick();
-//		}
 	}
 
 	private static void ShowInventory()
@@ -1032,30 +972,14 @@ public static class GamePlay {
 			}
 		}
 
-		//test
 		if(isWin)
 		{
             Debug.Log("isWin");
             ProgressController.instance.SetProgress("Explorer", GamePlay.maxCompleteLevel);
-			//int maxLevel = PlayerPrefs.GetInt("maxCompleteLevel");
-
-
-
 			if(GamePlay.maxCompleteLevel < GameData.numberLoadLevel)
 			{
                 GamePlay.maxCompleteLevel = GameData.numberLoadLevel;               
-                //PlayerPrefs.SetInt("maxCompleteLevel", GameData.numberLoadLevel+1);
-				//PlayerPrefs.Save();
 			}
-
-			//string level = "starsLevel" + GameData.numberLoadLevel;
-			//int countStars = PlayerPrefs.GetInt (level);
-			//if(countStars<GamePlay.countStarsLevel)
-			//{
-			//	PlayerPrefs.SetInt(level, GamePlay.countStarsLevel);
-			//	PlayerPrefs.Save();
-			//}
-
 		}
 
 		return isWin;

@@ -12,9 +12,12 @@ namespace Assets.Scripts.MyScripts.Popups
         Exit,
         StartLevel,
         RateUs,
-        NoLifes,
+        NoLives,
         UnlockGates,
-        AchivementsPopup
+        Pause,
+        Win,
+        Lose,
+        NoMoves
     }
 
     public class PopupsController : UnitySingleton<PopupsController>

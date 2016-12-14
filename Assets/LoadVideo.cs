@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MyScripts.Gates;
 using Assets.Scripts.MyScripts.Lives;
 using UnityEngine.UI;
 
@@ -41,10 +43,21 @@ public class LoadVideo : MonoBehaviour {
     public void GiveOneForTimer()
     {
 #if UNITY_EDITOR
-        InAppManager.CompleteTimer();
+        GatesStorage.Instance.CurrentGates.AddTime(TimeSpan.FromMinutes(30));
 #endif
 #if UNITY_ANDROID
         AdSDK.forTimer = true;
+        StartCoroutine(StartPreload());
+#endif
+    }
+
+    public void GiveOneForMoves()
+    {
+#if UNITY_EDITOR
+        
+#endif
+#if UNITY_ANDROID
+        AdSDK.forMoves = true;
         StartCoroutine(StartPreload());
 #endif
     }

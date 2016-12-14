@@ -8,10 +8,8 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.MyScripts.Popups
 {
-    class StartLevelPopup : Popup
+    class PausePopup : Popup
     {
-        [SerializeField] 
-        private Text levelTxt;
         [SerializeField]
         private Text recordTxt;
         [SerializeField]
@@ -22,75 +20,58 @@ namespace Assets.Scripts.MyScripts.Popups
         private Image targetImg;
         [SerializeField]
         private List<Sprite> iconsList;
-        [SerializeField]
-        private List<GameObject> stars;
 
-        private int _countStars;
         private int _currentLvl;
-
         public override void Close()
         {
-            HideStars();
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);  
+            GamePlay.SetInput(true);
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowClose, false);
             base.Close();
 
         }
 
-        public void OnDisable()
-        {
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowClose, false); 
-        }
-
         public override void OnShow()
         {
-            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowOpenLevel, false);
             _currentLvl = GameData.numberLoadLevel;
-            levelTxt.text = Texts.GetText(WhatText.LevelTxt) + " " + _currentLvl;
             UpdateRecordTxt();
             InitTarget();
-            InitStars();
+            GamePlay.SetInput(false);
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowOpen, false);
             base.OnShow();
 
         }
 
-        private void HideStars()
+        public void OnSettingBtnClick()
         {
-            for (int i = 0; i < 3; i++)
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);
+            PopupsController.Instance.Show(PopupType.Settings);
+        }
+
+        public void OnReplayBtnClick()
+        {
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonReplay, false);
+            if (LivesManager.Instance.LivesCount < 1)
             {
-                stars[i].SetActive(false);
+                PopupsController.Instance.Show(PopupType.NoLives);
+            }
+            else
+            {
+                LivesManager.Instance.SpendLife(1);
+                Debug.Log("AdSDK Send Event - REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
+                AdSDK.SendEvent("REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
+                UnityEngine.SceneManagement.SceneManager.LoadScene("SplashScreen");
             }
         }
-        private void InitStars()
+
+        public void OnHomeBtnClick()
         {
-            Debug.Log("_currentLvl " + _currentLvl + "_countStars" + _countStars);
-            _countStars = PlayerPrefs.GetInt("starsLevel"+_currentLvl);
-            for (int i = 0; i < _countStars; i++)
-            {
-                stars[i].SetActive(true);
-            }
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonToMap, false);
+            UnityEngine.SceneManagement.SceneManager.LoadScene("ToMapScene");
         }
 
         public void OnPlayBtnClick()
         {
-            SendEvents();
             GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPlay, false);
-            LivesManager.Instance.SpendLife(1);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SplashScreen");
-        }
-
-        private void SendEvents()
-        {
-            if (GamePlay.maxCompleteLevel == GameData.numberLoadLevel && PlayerPrefs.GetInt("starsLevel" + GameData.numberLoadLevel, -1) == -1)
-            {
-                Debug.Log("AdSDK Send Event - UNIQUE_START_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-                AdSDK.SendEvent("UNIQUE_START_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-                PlayerPrefs.SetInt("starsLevel" + GameData.numberLoadLevel, 0);
-            }
-            else
-            {
-                Debug.Log("AdSDK Send Event - REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-                AdSDK.SendEvent("REPLAY_LEVEL_" + GameData.numberLoadLevel.ToString("000"));
-            }
         }
 
         private void UpdateRecordTxt()
@@ -167,6 +148,5 @@ namespace Assets.Scripts.MyScripts.Popups
 
             return targetName;
         }
-
     }
 }
