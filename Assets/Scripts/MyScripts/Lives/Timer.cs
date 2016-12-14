@@ -27,6 +27,10 @@
             OnTick();
         }
 
+        public void AddTime(TimeSpan interval) {
+            _timeLeft -= (float)interval.TotalSeconds;
+        }
+
         public TimeSpan TimeLeft {
             get {
                 return TimeSpan.FromSeconds(IsStarted ? _timeLeft : Interval);

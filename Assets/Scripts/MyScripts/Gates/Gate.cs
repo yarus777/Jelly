@@ -1,7 +1,6 @@
 ﻿namespace Assets.Scripts.MyScripts.Gates {
     using System;
     using Lives;
-    using UnityEngine;
 
     public enum GateState {
         Locked,
@@ -30,8 +29,25 @@
             }
         }
 
-        private void OnTimer() {
-            ChangeState(GateState.Opened);
+        public void SetCurrentLevel(int currentLevel) {
+            if (currentLevel == Level) {
+                ChangeState(GateState.Waiting);
+            }
+            else if (currentLevel > Level) {
+                ChangeState(GateState.Opened);
+            }
+        }
+
+        public void AddTime(TimeSpan interval) {
+            _timer.AddTime(interval);
+        }
+
+        public override string ToString() {
+            return string.Format("Gates: level {0}, state {1}, time: {2}", Level, _state, _timer.TimeLeft);
+        }
+
+        public State Save() {
+            return new State(Level, _state, (float)_timer.TimeLeft.TotalSeconds);
         }
 
         public GateState Status {
@@ -56,18 +72,13 @@
                     _timer.StopTimer();
                     break;
             }
-            Debug.Log(this);
             if (StateChanged != null) {
                 StateChanged.Invoke(this, newState);
             }
         }
 
-        public override string ToString() {
-            return string.Format("Gates: level {0}, state {1}, time: {2}", Level, _state, _timer.TimeLeft);
-        }
-
-        public State Save() {
-            return new State(Level, _state, (float) _timer.TimeLeft.TotalSeconds);
+        private void OnTimer() {
+            ChangeState(GateState.Opened);
         }
 
         public class State {
@@ -94,14 +105,6 @@
                 var level = int.Parse(json["level"].ToString().Trim('\"'));
                 var timer = float.Parse(json["timer"].ToString().Trim('\"'));
                 return new State(level, status, timer);
-            }
-        }
-
-        public void SetCurrentLevel(int currentLevel) {
-            if (currentLevel == Level) {
-                ChangeState(GateState.Waiting);
-            } else if (currentLevel > Level) {
-                ChangeState(GateState.Opened);
             }
         }
     }
