@@ -18,7 +18,7 @@ public class LoadWinLose : MonoBehaviour {
         }
 
         if (GamePlay.WinLevel()) {
-            Debug.Log("last opened " + PlayerPrefs.GetInt("lastOpenLevel", 1));
+            Debug.Log("last opened " + GamePlay.LastOpenedLvl);
             var level = "starsLevel" + GameData.numberLoadLevel;
             var countStars = PlayerPrefs.GetInt(level);
 
@@ -49,6 +49,7 @@ public class LoadWinLose : MonoBehaviour {
 #endif
             if (GameData.numberLoadLevel != GameData.allLevels) {
                 GameData.numberLoadLevel++;
+                GamePlay.LastOpenedLvl = GameData.numberLoadLevel;
                 Debug.Log("maxCompleteLevel: " + GamePlay.maxCompleteLevel + "\n numberLoadLevel: " +
                           GameData.numberLoadLevel);
                 if (GamePlay.maxCompleteLevel < GameData.numberLoadLevel) {

@@ -33,9 +33,7 @@
             set {
                 _isActive = value;
                 _button.interactable = _isActive;
-                if (!_isActive) {
-                    _levelNumberText.color = new Color(0.4f, 0.4f, 0.4f);
-                }
+                _levelNumberText.color = _isActive ? new Color(0.5f, 0.04f, 0.04f) : new Color(0.4f, 0.4f, 0.4f);
                 InitStars();
             }
         }
@@ -44,6 +42,16 @@
             if (Clicked != null) {
                 Clicked.Invoke(_levelNumber);
             }
+        }
+
+        public void OnBtnUp()
+        {
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush2, false);
+        }
+
+        public void OnBtnDown()
+        {
+            GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);
         }
 
         public event Action<int> Clicked;

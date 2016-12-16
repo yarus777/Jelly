@@ -16,7 +16,7 @@ public class TwentyOneTutorial : BaseTutorial {
         TemplateShowTutorial(new[] {37}, StatementShadow.Off, StatementShadow.Off, 8f,
             StringConstants.GetTextTutorial(StringConstants.Level.TwentyOne, 2), true, false);
 
-        GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
+       /* GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
             GamePlay.gameUI.targetName.color.g,
             GamePlay.gameUI.targetName.color.b,
             1f);
@@ -24,8 +24,7 @@ public class TwentyOneTutorial : BaseTutorial {
             GamePlay.gameUI.targetCount.color.g,
             GamePlay.gameUI.targetCount.color.b,
             1f);
-
-//		GamePlay.gameUI.panels[0].color = new Color(1f,1f,1f,1f);
+        */
     }
 
     public override void Step3() {

@@ -15,6 +15,10 @@
                     Destroy(gate.gameObject);
                     continue;
                 }
+                if (data.Status == GateState.Opened)
+                {
+                    Destroy(gate.gameObject);
+                }
                 gate.StateChanged += OnGateStateChanged;
                 gate.Init(data);
             }

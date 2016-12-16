@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.MyScripts.Scenes
 {
-    class LoadBg : MonoBehaviour
+    public class LoadBg : MonoBehaviour
     {
         [SerializeField]
         private List<Sprite> bgsList;
         [SerializeField]
         private Image bg;
+        protected internal static Image[] images;
         void Start()
         {
             if (GameData.numberLoadLevel < 21)
@@ -39,6 +40,7 @@ namespace Assets.Scripts.MyScripts.Scenes
 
         void Awake()
         {
+                images = GetComponentsInChildren<Image>();
             if (GamePlay.maxCompleteLevel >= 3)
             {
                 AdSDK.SetBannerVisible(true);

@@ -3,7 +3,7 @@
     using UnityEngine;
     using UnityEngine.UI;
 
-    internal class GameFieldScene : MonoBehaviour {
+    public class GameFieldScene : MonoBehaviour {
         [SerializeField]
         private Text targetTitleTxt;
 
@@ -19,19 +19,25 @@
         [SerializeField]
         private Text targetTxt;
 
-        void Start() {
+        void Start()
+        {
+            //GamePlay.gameUI = this;
             GameData.ScoreChanged += UpdateScore;
+            GamePlay.TaskValueUpdated += OnTaskScoreUpdated;
             InitTargetTitle();
             InitMovesTitle();
             UpdateScore(GameData.Score);
+            OnTaskScoreUpdated();
         }
 
         private void UpdateScore(int score) {
             scoreTxt.text = "" + score;
             movesTxt.text = "" + GameData.limit.GetLimitCount();
-            targetTxt.text = "" +
-                             string.Format("{0}/{1}", GameData.taskLevel[0].GetCurrent(),
-                                 GameData.taskLevel[0].GetGoal());
+        }
+
+        private void OnTaskScoreUpdated()
+        {
+            targetTxt.text = "" + string.Format("{0}/{1}", GameData.taskLevel[0].GetCurrent(), GameData.taskLevel[0].GetGoal());
         }
 
 
@@ -46,11 +52,17 @@
         }
 
         public void OnPauseBtnClick() {
-            PopupsController.Instance.Show(PopupType.Pause);
+            Debug.Log("GamePlay.isTutorialActive " + GamePlay.isTutorialActive);
+            if (!GamePlay.isTutorialActive)
+            {
+                PopupsController.Instance.Show(PopupType.Pause);
+            }
+            
         }
 
         void OnDestroy() {
             GameData.ScoreChanged -= UpdateScore;
+            GamePlay.TaskValueUpdated -= OnTaskScoreUpdated;
         }
 
         #region Sounds

@@ -48,7 +48,7 @@
         private IEnumerator TimerUpdatingCoroutine() {
             while (true) {
                 var timeLeft = _gate.TimeLeft;
-                _timerText.text = string.Format("{0:00}:{1:00}:{2:00}", timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+                _timerText.text = string.Format("{0:00}:{1:00}:{2:00}", timeLeft.Hours + timeLeft.Days * 24, timeLeft.Minutes, timeLeft.Seconds);
                 yield return new WaitForSeconds(1);
             }
         }

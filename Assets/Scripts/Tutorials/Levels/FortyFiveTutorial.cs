@@ -37,15 +37,14 @@ public class FortyFiveTutorial : BaseTutorial {
     public override void Step6() {
         TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.FortyFive, 5), new Vector2(-3.4f, 8.5f), true);
-        GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
+        /*GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
             GamePlay.gameUI.targetName.color.g,
             GamePlay.gameUI.targetName.color.b,
             1f);
         GamePlay.gameUI.targetCount.color = new Color(GamePlay.gameUI.targetCount.color.r,
             GamePlay.gameUI.targetCount.color.g,
             GamePlay.gameUI.targetCount.color.b,
-            1f);
+            1f);*/
 
-//		GamePlay.gameUI.panels[0].color = new Color(1f,1f,1f,1f);
     }
 }

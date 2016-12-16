@@ -10,7 +10,7 @@ public class SixthTutorial : BaseTutorial {
         TemplatePopupTutorial(false, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.Six, 0), new Vector2(0, 8.5f), true);
 
-        GamePlay.gameUI.nameLimit.color = new Color(GamePlay.gameUI.nameLimit.color.r,
+        /*GamePlay.gameUI.nameLimit.color = new Color(GamePlay.gameUI.nameLimit.color.r,
             GamePlay.gameUI.nameLimit.color.g,
             GamePlay.gameUI.nameLimit.color.b,
             1f);
@@ -21,9 +21,8 @@ public class SixthTutorial : BaseTutorial {
 
         foreach (var spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>()) {
             spriteRenderer.color = new Color(1f, 1f, 1f, 0f);
-        }
+        }*/
 
-//		GamePlay.gameUI.panels[1].color = new Color(1f,1f,1f,1f);
     }
 
     public override void Step2() {

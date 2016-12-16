@@ -16,15 +16,17 @@ public class StartScene : MonoBehaviour {
                 }
             }
         }
-        GamePlay.LoadSoundSettings();
-        GameData.numberLoadLevel = PlayerPrefs.GetInt("lastOpenLevel", 1);
+
+        GameData.numberLoadLevel = GamePlay.LastOpenedLvl;
         PlayerPrefs.SetInt("updateAppScreen", PlayerPrefs.GetInt("updateAppScreen", 0) + 1);
 
-        PlayerPrefs.SetInt("maxCompleteLevel", 20);
+        //PlayerPrefs.SetInt("maxCompleteLevel", 5);
     }
+
 
     IEnumerator Start() {
         yield return new WaitForSeconds(0.5f);
+        GamePlay.LoadSoundSettings();
         AsyncOperation loadLevel;
         if (PlayerPrefs.GetInt("firstStart", 0) == 0) {
             GameData.numberLoadLevel = 1;

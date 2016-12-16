@@ -19,6 +19,9 @@ namespace Assets.Scripts.MyScripts.Map {
         private LevelButton _levelButtonPrefab;
 
         [SerializeField]
+        private LevelButton _alternativeLevelButtonPrefab;
+
+        [SerializeField]
         private AnimationClip _currentLevelButtonAnimation;
 
         private List<LevelButton> _buttons;
@@ -26,26 +29,73 @@ namespace Assets.Scripts.MyScripts.Map {
         [SerializeField]
         private ScrollRect scroll;
 
-        private void Awake() {
+        [SerializeField]
+        private int _levelsToChangeColor;
+
+        private GatesStorage _gateStorage;
+        private Animation _anim;
+
+
+        private void Awake()
+        {
+            _gateStorage = GatesStorage.Instance;
             // загружаем ворота
             _gatesController.Load();
             GatesStorage.Instance.OnCurrentLevelChanged(GamePlay.maxCompleteLevel);
 
             // загружаем уровни
             _buttons = Load();
-            var currentLevelButton = _buttons.First(x => x.LevelNumber == PlayerPrefs.GetInt("lastOpenLevel", 1));
-            var anim = currentLevelButton.gameObject.AddComponent<Animation>();
-            anim.AddClip(_currentLevelButtonAnimation, ACTIVE_LEVEL_ANIMATION_NAME);
-            anim.Play(ACTIVE_LEVEL_ANIMATION_NAME);
+            UpdateLevelsState();
+            Debug.Log("lastOpenLevel load " + GamePlay.LastOpenedLvl);
+            //var currentLevelButton = _buttons.First(x => x.LevelNumber == GamePlay.LastOpenedLvl);
+            
+            _gateStorage.StateChanged += OnGatesStateChanged;
+
+            Invoke("LoadLvlPopup", 1f);
+        }
+
+        private void OnGatesStateChanged(Gate gate, GateState state)
+        {
+            if (state == GateState.Opened)
+            {
+                UpdateLevelsState();
+            }
+        }
+
+        private void UpdateLevelsState()
+        {
+            foreach (var button in _buttons)
+            {
+                button.IsActive = IsLevelOpened(button.LevelNumber);
+            }
+            if (_anim != null)
+            {
+                _anim.Stop();
+                Destroy(_anim);
+            }
+            var currentLevelButton = _buttons.First(x => x.LevelNumber == MaxAvailableLevel);
+            _anim = currentLevelButton.gameObject.AddComponent<Animation>();
+            _anim.AddClip(_currentLevelButtonAnimation, ACTIVE_LEVEL_ANIMATION_NAME);
+            _anim.Play(ACTIVE_LEVEL_ANIMATION_NAME);
+        }
+
+        private void LoadLvlPopup()
+        {
+            if (LivesManager.Instance.LivesCount > 0)
+            {
+                GameData.numberLoadLevel = MaxAvailableLevel;
+                PopupsController.Instance.Show(PopupType.StartLevel);
+            }
         }
 
         private List<LevelButton> Load() {
             var positions = GetComponentsInChildren<LevelButtonPosition>();
             var buttons = new List<LevelButton>();
-            foreach (var position in positions) {
-                var button = Instantiate(_levelButtonPrefab.gameObject).GetComponent<LevelButton>();
+            foreach (var position in positions)
+            {
+                var buttonPrefab = ((position.Number - 1)/_levelsToChangeColor)%2 == 0 ? _levelButtonPrefab.gameObject : _alternativeLevelButtonPrefab.gameObject;
+                var button = Instantiate(buttonPrefab).GetComponent<LevelButton>();
                 position.SetLevelButton(button);
-                button.IsActive = IsLevelOpened(position.Number);
                 button.Clicked += OnLevelClicked;
                 buttons.Add(button);
             }
@@ -73,20 +123,21 @@ namespace Assets.Scripts.MyScripts.Map {
         private void OnLevelClicked(int levelNumber) {
             Debug.Log("levelNumber " + levelNumber);
             if (LivesManager.Instance.LivesCount > 0) {
-                PlayerPrefs.SetInt("lastOpenLevel", GameData.numberLoadLevel);
-                PlayerPrefs.Save();
                 GameData.numberLoadLevel = levelNumber;
+                GamePlay.LastOpenedLvl = GameData.numberLoadLevel;
+                Debug.Log("lastOpenLevel clicked " + GamePlay.LastOpenedLvl);
                 PopupsController.Instance.Show(PopupType.StartLevel);
-                GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.ButtonPush1, false);
             }
             else {
                 PopupsController.Instance.Show(PopupType.NoLives);
-                GamePlay.soundManager.CreateSoundTypeUI(SoundsManager.UISoundType.WindowNotMoves, false);
             }
         }
 
+    
+
         void OnDestroy()
         {
+            _gateStorage.StateChanged -= OnGatesStateChanged;
             SavePos();
         }
         private void LoadPos()

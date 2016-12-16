@@ -16,57 +16,73 @@ public class FirstTutorial : BaseTutorial {
     }
 
     public override void Step3() {
+
+        //TemplatePopupTutorial(false, StatementShadow.Off, StatementShadow.Off, 10,
+        //   StringConstants.GetTextTutorial(StringConstants.Level.First, 2), new Vector2(-121f, 361f), true);
+
+
         TemplatePopupTutorial(false, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.First, 2), new Vector2(-3.4f, 8.5f), true);
-        GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
+        
+        /*GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
             GamePlay.gameUI.targetName.color.g,
             GamePlay.gameUI.targetName.color.b,
             1f);
         GamePlay.gameUI.targetCount.color = new Color(GamePlay.gameUI.targetCount.color.r,
             GamePlay.gameUI.targetCount.color.g,
             GamePlay.gameUI.targetCount.color.b,
-            1f);
+            1f);*/
 
-//		GamePlay.gameUI.panels[0].color = new Color(1f,1f,1f,1f);
     }
 
     public override void Step4() {
+
+        //TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
+        //   StringConstants.GetTextTutorial(StringConstants.Level.First, 4), new Vector2(114f, 356f), true);
+
         TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.First, 4), new Vector2(3.4f, 8.5f), true);
-        GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
+        /*GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
             GamePlay.gameUI.score.color.g,
             GamePlay.gameUI.score.color.b,
             1f);
         GamePlay.gameUI.nameScore.color = new Color(GamePlay.gameUI.nameScore.color.r,
             GamePlay.gameUI.nameScore.color.g,
             GamePlay.gameUI.nameScore.color.b,
-            1f);
+            1f);*/
 
-//		GamePlay.gameUI.panels[2].color = new Color(1f,1f,1f,1f);
     }
 
     public override void Step5() {
+
+        //TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
+        //    StringConstants.GetTextTutorial(StringConstants.Level.First, 3), new Vector2(-3f, 320f), true);
+
         TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.First, 3), new Vector2(0f, 7.5f), true);
-        foreach (var spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>()) {
-            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-        }
 
-//		GamePlay.gameUI.panels[1].color = new Color(1f,1f,1f,1f);
+       /* foreach (var spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>()) {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        }*/
+
     }
 
     public override void Step6() {
+
+        //TemplatePopupTutorial(false, StatementShadow.Off, StatementShadow.Off, 10,
+        //   StringConstants.GetTextTutorial(StringConstants.Level.First, 2), new Vector2(-121f, 361f), true);
+
         TemplatePopupTutorial(true, StatementShadow.Off, StatementShadow.Off, 10,
             StringConstants.GetTextTutorial(StringConstants.Level.First, 5), new Vector2(-3.4f, 8.5f), true);
-        GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
+        
+        /*GamePlay.gameUI.targetName.color = new Color(GamePlay.gameUI.targetName.color.r,
             GamePlay.gameUI.targetName.color.g,
             GamePlay.gameUI.targetName.color.b,
             1f);
-        GamePlay.gameUI.targetCount.color = new Color(GamePlay.gameUI.targetCount.color.r,
+       GamePlay.gameUI.targetCount.color = new Color(GamePlay.gameUI.targetCount.color.r,
             GamePlay.gameUI.targetCount.color.g,
             GamePlay.gameUI.targetCount.color.b,
-            1f);
+            1f);*/
 
-//		GamePlay.gameUI.panels[0].color = new Color(1f,1f,1f,1f);
     }
 }

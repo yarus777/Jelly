@@ -35,10 +35,25 @@
                     gate = new Gate(gateData.Level, timer, GateState.Locked,
                         TimeSpan.FromSeconds(gateData.TimeLeftValue));
                 }
+                gate.StateChanged += OnGateStateChanged;
                 _gates.Add(gate);
             }
             CurrentGates = _gates.FirstOrDefault(x => x.Status == GateState.Waiting);
             
+        }
+
+        public event Action<Gate, GateState> StateChanged;
+
+        private void OnGateStateChanged(Gate gate, GateState gateState)
+        {
+            if (gateState == GateState.Opened)
+            {
+                CurrentGates = null;
+            }
+            if (StateChanged != null)
+            {
+                StateChanged(gate, gateState);
+            }
         }
 
         public void OnCurrentLevelChanged(int currentLevel) {
@@ -51,9 +66,10 @@
         private Gate.State Parse(JSONObject json) {
             var level = int.Parse(json["level"].ToString().Trim('\"'));
             var timeString = json["time"].ToString().Trim('\"');
-            var regex = new Regex(@"(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})");
+            var regex = new Regex(@"(?<days>\d{2}):(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})");
             var match = regex.Match(timeString);
             var timeLeft = new TimeSpan(
+                int.Parse(match.Groups["days"].Value),
                 int.Parse(match.Groups["hours"].Value),
                 int.Parse(match.Groups["minutes"].Value),
                 int.Parse(match.Groups["seconds"].Value));

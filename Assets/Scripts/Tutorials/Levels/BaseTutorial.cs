@@ -1,6 +1,7 @@
 ﻿//#define DebugInfo
 
 using System.Collections.Generic;
+using Assets.Scripts.MyScripts.Scenes;
 using UnityEngine;
 
 public abstract class BaseTutorial {
@@ -16,6 +17,8 @@ public abstract class BaseTutorial {
 
     public void StartTutorial() {
 //		GamePlay.pauseCollider.enabled = false;
+        Debug.Log("Start tutorial");
+        GamePlay.isTutorialActive = true;
         NextStepTutorial();
     }
 
@@ -118,9 +121,9 @@ public abstract class BaseTutorial {
     private void StopTutorial() {
         ResetTutorial();
         GamePlay.tutorial.StopTutorial();
-#if DebugInfo
+        GamePlay.isTutorialActive = false;
 		Debug.Log("StopTutorial");
-#endif
+
 
         if (bonusTime) {
             bonusTime = false;
@@ -316,28 +319,26 @@ public abstract class BaseTutorial {
 
     public void InitFinger(Vector2 position, Transform parent) {
         fingers.Add(MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Tutorials/finger")));
+        Debug.Log("parent: " + parent);
         if (parent != null) {
             fingers[fingers.Count - 1].transform.parent = parent;
-        }
+        }       
         fingers[fingers.Count - 1].transform.localPosition = new Vector3(position.x, position.y, -3);
+        fingers[fingers.Count - 1].transform.localScale = new Vector3(50f,50f,1f);
     }
 
     public void SwitchBack(StatementShadow state) {
         switch (state) {
             case StatementShadow.On:
-                foreach (var spriteRenderer in GamePlay.backUI.spriteRenderers) {
-//					if(spriteRenderer!=null)
-//					{ 
-                    spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-//					}
+                foreach (var image in LoadBg.images)
+                {
+                    image.color = new Color(1f, 1f, 1f, 1f);
                 }
                 break;
             case StatementShadow.Off:
-                foreach (var spriteRenderer in GamePlay.backUI.spriteRenderers) {
-//					if(spriteRenderer!=null)
-//					{
-                    spriteRenderer.color = new Color(0.4f, 0.4f, 0.4f, 1f);
-//					}
+                foreach (var image in LoadBg.images) {
+                    image.color = new Color(0.4f, 0.4f, 0.4f, 1f);
+
                 }
                 break;
         }
@@ -346,7 +347,7 @@ public abstract class BaseTutorial {
     public void SwitchGameInterface(StatementShadow state) {
         switch (state) {
             case StatementShadow.On:
-                GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
+                /*GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
                     GamePlay.gameUI.score.color.g,
                     GamePlay.gameUI.score.color.b,
                     1f);
@@ -373,10 +374,10 @@ public abstract class BaseTutorial {
                 GamePlay.gameUI.back.color = new Color(1f, 1f, 1f, 1f);
                 foreach (var spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>()) {
                     spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-                }
+                }*/
                 break;
             case StatementShadow.Off:
-                GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
+                /*GamePlay.gameUI.score.color = new Color(GamePlay.gameUI.score.color.r,
                     GamePlay.gameUI.score.color.g,
                     GamePlay.gameUI.score.color.b,
                     0.6f);
@@ -403,7 +404,7 @@ public abstract class BaseTutorial {
                 GamePlay.gameUI.back.color = new Color(0.4f, 0.4f, 0.4f, 1f);
                 foreach (var spriteRenderer in GamePlay.gameUI.stars.GetComponentsInChildren<SpriteRenderer>()) {
                     spriteRenderer.color = new Color(0.4f, 0.4f, 0.4f, 1f);
-                }
+                }*/
                 break;
         }
     }
@@ -477,6 +478,8 @@ public abstract class BaseTutorial {
         LoadTeacher(posTeacherY, textTutorial);
         if (isFinger) {
             InitFinger(new Vector2(positionFinger.x, positionFinger.y), GamePlay.gameUI.gameObject.transform);
+            //InitFinger(new Vector2(positionFinger.x, positionFinger.y), GameObject.Find("UICanvas").transform);
+            
         }
         CreateContinueTap();
     }

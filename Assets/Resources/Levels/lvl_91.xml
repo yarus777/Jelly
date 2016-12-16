@@ -4,7 +4,7 @@
     <TaskLevel type="1" goal="40000" />
     <DiamondSettings min="0" max="0" chance="0" />
     <LimitLevel type="3" count="25" />
-    <Stars first="20000" second="45000" third="46600" />
+    <Stars first="20000" second="30000" third="40000" />
     <PowerUps bombs="1" arrows="1" gifts="1" prisms="1" />
     <BonusTime bonusTime="1" />
   </Level>

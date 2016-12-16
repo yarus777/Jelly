@@ -20,11 +20,11 @@ public class GameInterface : MonoBehaviour {
     }
 
     public void Update() {
-        UpdateScore();
-        UpdateNameLimit();
-        UpdateCountLimit();
-        UpdateTargetName();
-        UpdateTargetCount();
+        //UpdateScore();
+        //UpdateNameLimit();
+        //UpdateCountLimit();
+        //UpdateTargetName();
+        //UpdateTargetCount();
     }
 
 

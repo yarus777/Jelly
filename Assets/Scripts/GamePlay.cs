@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Game play.
@@ -100,6 +103,27 @@ public static class GamePlay {
     public static bool oneShotDigDrop;
 
     public static bool oneShotPrisBoom;
+
+
+    public static bool isTutorialActive;
+
+    private static int _lastOpenedLvl;
+
+    public static int LastOpenedLvl
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("lastOpenLevel", 1);          
+        }
+        set
+        {
+            _lastOpenedLvl = value;
+            PlayerPrefs.SetInt("lastOpenLevel", _lastOpenedLvl);
+            PlayerPrefs.Save();
+            Debug.Log("SET: lastOpenLevel:" + _lastOpenedLvl);
+        }
+    }
+
     private static int _maxCompleteLevel;
 
     public static int maxCompleteLevel {
@@ -191,10 +215,8 @@ public static class GamePlay {
     public static PrismUI prismUI;
     public static PU puActive = PU.Empty;
 
-    public static BackUI backUI;
-
     public static GameInterface gameUI;
-
+    //public static GameFieldScene gameUI;
 
     public static bool notDeleteObject;
 
@@ -239,7 +261,6 @@ public static class GamePlay {
         endTargetAnimation = false;
         enableButtonInterface = true;
         isAnimationFinger = false;
-        backUI = null;
         notDeleteObject = false;
         stateUI = EUI.Empty;
         puActive = PU.Empty;
@@ -818,8 +839,18 @@ public static class GamePlay {
         foreach (var task in GameData.taskLevel) {
             if (task.GetTaskType() == type) {
                 task.SetCurrent(value);
+                OnTaskValueUpdated();
                 //break;
             }
+        }
+    }
+
+    public static event Action TaskValueUpdated;
+    private static void OnTaskValueUpdated()
+    {
+        if (TaskValueUpdated != null)
+        {
+            TaskValueUpdated();
         }
     }
 
@@ -1002,9 +1033,9 @@ public static class GamePlay {
         return false;
     }
 
-    public static void
-        LoadSoundSettings() {
+    public static void LoadSoundSettings() {
         var sound = PlayerPrefs.GetInt("sound");
+        Debug.Log("sound " + sound);
         if (sound == 0) {
             soundOn = true;
         } else {
