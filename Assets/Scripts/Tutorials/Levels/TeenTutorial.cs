@@ -1,20 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public class TeenTutorial : BaseTutorial {
+    public TeenTutorial() {
+        maxStep = 1;
+    }
 
-public class TeenTutorial : BaseTutorial {
+    public override void Step1() {
+        
 
-	public TeenTutorial()
-	{
-		maxStep = 1;
-	}
-	
-	public override void Step1 ()
-	{
-		GamePlay.pauseCollider.enabled = false;
-		GamePlay.inventoryCollider.enabled = false;
-		
-		TemplateSelectTutorial (new int[]{38,32,25,19,14,15,22,28,33,39}, true, StatementShadow.Off, StatementShadow.Off, 15f, StringConstants.GetTextTutorial(StringConstants.Level.Teen, 0));
-	}
+        TemplateSelectTutorial(new[] {38, 32, 25, 19, 14, 15, 22, 28, 33, 39}, true, StatementShadow.Off,
+            StatementShadow.Off, 15f, StringConstants.GetTextTutorial(StringConstants.Level.Teen, 0));
+    }
 
     /*public override void Step2 ()
     {
@@ -87,9 +81,8 @@ public class TeenTutorial : BaseTutorial {
 	}
      */
 
-    public void CanSelected(int i, int j)
-	{
-		Properties property = GameData.manager.ReturnObjectOfIJPos (i, j);
-		property.canSelected = false;
-	}
+    public void CanSelected(int i, int j) {
+        var property = GameData.manager.ReturnObjectOfIJPos(i, j);
+        property.canSelected = false;
+    }
 }

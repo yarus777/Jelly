@@ -243,7 +243,7 @@ public class Properties : CacheTransform {
 			countPoint*=GameData.multiplyBonusTimePoints;
 		}
 
-		GameData.score+=countPoint;
+		GameData.Score+=countPoint;
 		GamePlay.AddTaskValue(Task.Points, countPoint);
 		GameData.starManager.SetFull ();
 	}

@@ -121,7 +121,7 @@ public class ProgressController : MonoBehaviour {
 	}
 
 	private void AddEventHonnor(JMAchivementSettings settings){
-        Debug.Log("AddEventHonnor");
+      
 		foreach (JMAchivementPack pack in jmAchivementPacks) {
 			foreach (JMAchivement achivement in pack.jmAchivements) {
 				foreach (JMHonor honor in achivement.honors) {

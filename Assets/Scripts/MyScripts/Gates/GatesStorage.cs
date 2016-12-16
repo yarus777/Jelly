@@ -10,7 +10,10 @@
         private const string KEY = "gates_data";
         private const string FILENAME = "gates";
         public Gate CurrentGates { get; private set; }
-        public IEnumerable<Gate> Gates { get {return _gates;} }
+
+        public IEnumerable<Gate> Gates {
+            get { return _gates; }
+        }
 
         private List<Gate> _gates;
 
@@ -24,20 +27,18 @@
                 Gate gate;
                 var timer = gameObject.AddComponent<Timer>();
                 var savedData = savedGatesData.Find(x => x.Level == gateData.Level);
-                if (savedData != null)
-                {
+                if (savedData != null) {
                     var timePassed = LivesManager.GetTimestamp(DateTime.UtcNow) - savingTime;
                     gate = new Gate(gateData.Level, timer, savedData.Status,
                         TimeSpan.FromSeconds(savedData.TimeLeftValue - timePassed));
-                }
-                else {
+                } else {
                     gate = new Gate(gateData.Level, timer, GateState.Locked,
                         TimeSpan.FromSeconds(gateData.TimeLeftValue));
                 }
                 _gates.Add(gate);
             }
             CurrentGates = _gates.FirstOrDefault(x => x.Status == GateState.Waiting);
-            Debug.Log("GATES LOADED");
+            
         }
 
         public void OnCurrentLevelChanged(int currentLevel) {

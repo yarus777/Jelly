@@ -10,8 +10,6 @@ public class FortyOneTutorial : BaseTutorial {
 	
 	public override void Step1 ()
 	{
-		GamePlay.pauseCollider.enabled = false;
-		GamePlay.inventoryCollider.enabled = false;
 		TemplateShowTutorial (new int[]{34}, StatementShadow.Off, StatementShadow.Off, 5f, StringConstants.GetTextTutorial(StringConstants.Level.FortyOne, 0), true, true);
 	}
 	

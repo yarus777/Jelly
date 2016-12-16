@@ -1,47 +1,40 @@
 using System;
-using UnityEngine;
 using System.Collections;
 using Assets.Scripts.MyScripts.Gates;
 using Assets.Scripts.MyScripts.Lives;
+using UnityEngine;
 
 #if UNITY_IOS
 using GoogleMobileAds.Api;
 #endif
 
-public class AdSDK : MonoBehaviour
-{
+public class AdSDK : MonoBehaviour {
+    public static AdSDK instance;
 
-    public static AdSDK instance = null;
-
-    public enum STATE
-    {
+    public enum STATE {
         Idle,
         Loading,
         Ready,
         Fail,
         Dismiss
     }
+
     public static STATE stateVideo = STATE.Idle;
     public static STATE stateInterstitial = STATE.Idle;
     private BannerAlignment alignment = BannerAlignment.BOTTOM;
     public static int bannerHeight;
-    private static bool bannerActive = false;
-    public enum BannerAlignment
-    {
-        TOP = 0, BOTTOM = 1
+    private static bool bannerActive;
+
+    public enum BannerAlignment {
+        TOP = 0,
+        BOTTOM = 1
     }
 
-    public int conversions
-    {
-        get
-        {
-            return PlayerPrefs.GetInt("conversions", 0);
-        }
-        set
-        {
-            PlayerPrefs.SetInt("conversions", value);
-        }
+    public int conversions {
+        get { return PlayerPrefs.GetInt("conversions", 0); }
+        set { PlayerPrefs.SetInt("conversions", value); }
     }
+
 #if UNITY_ANDROID
 
 #if AMAZON
@@ -53,9 +46,7 @@ public class AdSDK : MonoBehaviour
     public static string packagePath;
 
 
-
-    public AndroidJavaObject getCurrentActivity()
-    {
+    public AndroidJavaObject getCurrentActivity() {
 #if !UNITY_EDITOR
 		AndroidJavaClass ajc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 		AndroidJavaObject activity = ajc.GetStatic<AndroidJavaObject>("currentActivity");
@@ -65,8 +56,7 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void SendConversion()
-    {
+    public static void SendConversion() {
         Debug.Log("SendConversion");
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
@@ -127,24 +117,17 @@ public class AdSDK : MonoBehaviour
 
 #endif
 
-    public static bool forMoves = false;
-    public static bool forLives = false;
-    public static bool forTimer = false;
-    public static bool forCoins = false;
+    public static bool forMoves;
+    public static bool forLives;
+    public static bool forTimer;
+    public static bool forCoins;
 
-    private bool noADS
-    {
-        get
-        {
-            return PlayerPrefs.GetInt("NOADS", 0) == 1;
-        }
+    private bool noADS {
+        get { return PlayerPrefs.GetInt("NOADS", 0) == 1; }
     }
 
 
-
-    private void Init(bool debug = false)
-    {
-        Debug.Log("Init SDK");
+    private void Init(bool debug = false) {
 #if UNITY_ANDROID
         //Debug.Log("Application.bundleIdentifier: " + Application.bundleIdentifier);
         packagePath = "jelly.monster.adventure";
@@ -166,8 +149,7 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void PreloadVideoAd()
-    {
+    public static void PreloadVideoAd() {
 #if UNITY_EDITOR
         stateVideo = STATE.Ready;
 #elif UNITY_ANDROID
@@ -180,8 +162,7 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void ShowVideoAd()
-    {
+    public static void ShowVideoAd() {
 #if UNITY_EDITOR
 
 #elif UNITY_ANDROID
@@ -198,11 +179,8 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void PreloadIntersisialAd()
-    {
-        if (instance.noADS)
-        {
-            return;
+    public static void PreloadIntersisialAd() {
+        if (instance.noADS) {
         }
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
@@ -215,11 +193,8 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void ShowIntersisialAd()
-    {
-        if (instance.noADS)
-        {
-            return;
+    public static void ShowIntersisialAd() {
+        if (instance.noADS) {
         }
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
@@ -234,8 +209,7 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void SendEvent(string someEvent)
-    {
+    public static void SendEvent(string someEvent) {
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
         AndroidJavaClass clazz = new AndroidJavaClass(packagePath+".SDKProxy");
@@ -247,13 +221,11 @@ public class AdSDK : MonoBehaviour
         Debug.LogWarning("Event: " + someEvent);
 #endif
     }
-    public void VideoStateUpdate(string state)
-    {
-        int videoState = 0;
-        if (Int32.TryParse(state, out videoState))
-        {
-            switch (videoState)
-            {
+
+    public void VideoStateUpdate(string state) {
+        var videoState = 0;
+        if (Int32.TryParse(state, out videoState)) {
+            switch (videoState) {
                 case 0:
                     stateVideo = STATE.Idle;
                     break;
@@ -278,13 +250,10 @@ public class AdSDK : MonoBehaviour
         }
     }
 
-    public void InterstitialStateUpdate(string state)
-    {
-        int interstitialState = 0;
-        if (Int32.TryParse(state, out interstitialState))
-        {
-            switch (interstitialState)
-            {
+    public void InterstitialStateUpdate(string state) {
+        var interstitialState = 0;
+        if (Int32.TryParse(state, out interstitialState)) {
+            switch (interstitialState) {
                 case 0:
                     stateInterstitial = STATE.Idle;
                     break;
@@ -298,7 +267,7 @@ public class AdSDK : MonoBehaviour
                     stateInterstitial = STATE.Fail;
                     break;
                 case 4:
-                    stateInterstitial = STATE.Dismiss;                   
+                    stateInterstitial = STATE.Dismiss;
                     break;
                 default:
                     stateInterstitial = STATE.Idle;
@@ -309,41 +278,35 @@ public class AdSDK : MonoBehaviour
     }
 
 
-    public static void OnDismissVideo(string msg)
-    {
+    public static void OnDismissVideo(string msg) {
         Debug.Log("AdSDK\nOnDismissVideo:" + msg);
 
         OnVideoFinished();
     }
 
 
-    public static void OnVideoFinished()
-    {
-      if (forMoves) {
-           Debug.Log("Add Moves");
-			forMoves = false;
-			InAppManager.CompleteMoves();
-		}
-		if (forLives) {
+    public static void OnVideoFinished() {
+        if (forMoves) {
+            Debug.Log("Add Moves");
+            forMoves = false;
+            GameData.buyManager.BuyLimit(GameData.limit.GetTypeLimit());
+        }
+        if (forLives) {
             Debug.Log("Add Life");
-			forLives = false;
-			LivesManager.Instance.AddLife(1);
-		}
-        if (forTimer)
-        {
+            forLives = false;
+            LivesManager.Instance.AddLife(1);
+        }
+        if (forTimer) {
             Debug.Log("Add Timer");
             forTimer = false;
             GatesStorage.Instance.CurrentGates.AddTime(TimeSpan.FromMinutes(30));
         }
-        if(forCoins)
-        {
+        if (forCoins) {
             forCoins = false;
-            
         }
     }
 
-    private static void CreateBanner(BannerAlignment alignment)
-    {
+    private static void CreateBanner(BannerAlignment alignment) {
         Debug.Log("CreateBanner");
         bannerActive = true;
 #if !UNITY_EDITOR
@@ -352,11 +315,9 @@ public class AdSDK : MonoBehaviour
 		        clazz.CallStatic("CreateBanner", instance.getCurrentActivity(), (int) alignment);
 #endif
 #endif
-
     }
 
-    private static void DestroyBanner()
-    {
+    private static void DestroyBanner() {
         Debug.Log("Destroy Banner");
         bannerActive = false;
 #if !UNITY_EDITOR
@@ -367,23 +328,19 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void SetBannerVisible(bool isVisible, BannerAlignment alignment = BannerAlignment.BOTTOM)
-    {
+    public static void SetBannerVisible(bool isVisible, BannerAlignment alignment = BannerAlignment.BOTTOM) {
         Debug.Log("Banner Visibility");
-        if (isVisible && !bannerActive)
-        {
+        if (isVisible && !bannerActive) {
             CreateBanner(alignment);
             Debug.Log("isVisible && !bannerActive");
         }
-        if (!isVisible && bannerActive)
-        {
+        if (!isVisible && bannerActive) {
             DestroyBanner();
             Debug.Log("!isVisible && bannerActive");
         }
     }
 
-    public static void ShowAppWall()
-    {
+    public static void ShowAppWall() {
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
         AndroidJavaClass clazz = new AndroidJavaClass(packagePath+".SDKProxy");
@@ -391,11 +348,9 @@ public class AdSDK : MonoBehaviour
         Debug.Log("AppWall");
 #endif
 #endif
-
     }
 
-    public static void ShowIncentAppWall()
-    {
+    public static void ShowIncentAppWall() {
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
         AndroidJavaClass clazz = new AndroidJavaClass(packagePath+".SDKProxy");
@@ -403,11 +358,9 @@ public class AdSDK : MonoBehaviour
         Debug.Log("ShowIncentAppwall");
 #endif
 #endif
-
     }
 
-    public static int GetBalance()
-    {
+    public static int GetBalance() {
         Debug.Log("Get Balance");
 #if !UNITY_EDITOR
 	    AndroidJavaObject jo = new AndroidJavaObject(packagePath+".SDKProxy");
@@ -418,8 +371,7 @@ public class AdSDK : MonoBehaviour
 #endif
     }
 
-    public static void Finish()
-    {
+    public static void Finish() {
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
 		AndroidJavaClass clazz = new AndroidJavaClass(packagePath+".SDKProxy");
@@ -429,48 +381,36 @@ public class AdSDK : MonoBehaviour
     }
 
 
-
-
-    void Awake()
-    {
-        if (instance)
-        {
+    void Awake() {
+        if (instance) {
             Destroy(gameObject);
-        }
-        else
-        {
+        } else {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
     }
 
-    private void CheckConversion()
-    {
+    private void CheckConversion() {
         conversions++;
-        if (conversions % 3 == 0)
-        {
+        if (conversions%3 == 0) {
             SendConversion();
         }
     }
 
-    IEnumerator Start()
-    {
+    IEnumerator Start() {
         Init();
 #if UNITY_ANDROID
-        if (GamePlay.maxCompleteLevel >= 3)
-        {
-            AdSDK.SetBannerVisible(true);
+        if (GamePlay.maxCompleteLevel >= 3) {
+            SetBannerVisible(true);
         }
-        
+
 #elif UNITY_IOS
 #if !UNITY_EDITOR
 		FlurryAgent.Instance.onStartSession (flurryKey);
 #endif
 
 #endif
-        while (true)
-        {
+        while (true) {
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
                 if (AdSDK.stateInterstitial != STATE.Ready)
@@ -491,12 +431,10 @@ public class AdSDK : MonoBehaviour
 #endif
             yield return new WaitForSeconds(30);
         }
-
     }
 
 
-    void OnApplicationQuit()
-    {
+    void OnApplicationQuit() {
 #if UNITY_IOS && !UNITY_EDITOR
 		FlurryAgent.Instance.onEndSession ();
 #endif
